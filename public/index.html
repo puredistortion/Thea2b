@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>A2B Video Downloader</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div>
+        <h1>A2B Video Downloader</h1>
+        <div>🌓</div>
+    </div>
+
+    <div role="main">
+        <div class="section input-section url-section">
+            <label for="url">Video URL</label>
+            <input type="url" id="url" placeholder="Enter the URL of the video you want to download">
+        </div>
+
+        <div class="section download-controls">
+            <button id="downloadButton" class="primary-button">Download Video</button>
+
+            <div id="progressBarContainer" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div id="progressBar"></div>
+                <div id="progressText">Ready to download</div>
+            </div>
+        </div>
+
+        <div class="section input-section cookies-section">
+            <label for="cookies">Cookies</label>
+            <textarea id="cookies"></textarea>
+
+            <div class="button-group" role="group" aria-label="Cookie management">
+                <button id="browseButton" class="secondary-button">Browse File</button>
+                <button id="fetchCookiesButton" class="secondary-button">Fetch Cookies</button>
+                <button id="clearButton" class="danger-button">Clear</button>
+            </div>
+
+            <div class="help-text">Cookies help download from sites requiring authentication</div>
+        </div>
+
+        <div class="section download-location-section">
+            <h3>Download Location</h3>
+            <div class="location-display">
+                <span id="current-location" aria-live="polite"></span>
+                <button id="select-location-btn" class="secondary-button">Change Location</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add this script tag to load the renderer -->
+    <script src="../src/renderer/index.js"></script>
+</body>
+</html>

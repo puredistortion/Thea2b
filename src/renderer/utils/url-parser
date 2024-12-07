@@ -1,0 +1,17 @@
+export const handleURLChange = async (url, UIController) => {
+    if (UIController.urlHandling.isProcessing) return;
+
+    try {
+        UIController.urlHandling.isProcessing = true;
+        UIController.urlHandling.currentURL = url;
+
+        if (isValidURL(url)) {
+            await UIController.handleFetchCookies();
+        }
+    } catch (error) {
+        console.error('URL handling error:', error);
+        showToast('Error processing URL', 'error');
+    } finally {
+        UIController.urlHandling.isProcessing = false;
+    }
+};

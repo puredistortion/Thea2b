@@ -1,0 +1,276 @@
+{"timestamp":"2024-11-21T09:40:45.634Z","type":"INFO","message":"Download progress","data":"[youtube] Extracting URL: https://youtu.be/E267RO7lS-U?si=3eiKKRDlqjnFRxnr"}
+{"timestamp":"2024-11-21T09:40:45.634Z","type":"INFO","message":"Download progress","data":"[youtube] E267RO7lS-U: Downloading webpage"}
+{"timestamp":"2024-11-21T09:40:46.453Z","type":"INFO","message":"Download progress","data":"[youtube] E267RO7lS-U: Downloading ios player API JSON"}
+{"timestamp":"2024-11-21T09:40:46.546Z","type":"INFO","message":"Download progress","data":"[youtube] E267RO7lS-U: Downloading mweb player API JSON"}
+{"timestamp":"2024-11-21T09:40:46.720Z","type":"INFO","message":"Download progress","data":"[youtube] E267RO7lS-U: Downloading player a8476471"}
+{"timestamp":"2024-11-21T09:40:49.742Z","type":"INFO","message":"Download progress","data":"[youtube] E267RO7lS-U: Downloading m3u8 information"}
+{"timestamp":"2024-11-21T09:40:50.017Z","type":"INFO","message":"Download progress","data":"[info] E267RO7lS-U: Downloading 1 format(s): 401+251"}
+{"timestamp":"2024-11-21T09:40:50.272Z","type":"INFO","message":"Download progress","data":"[download] Destination: /Users/ctb_ceo/A2B downloader/downloads/1732182044097.temp.mp4.f401.mp4"}
+{"timestamp":"2024-11-21T09:40:50.274Z","type":"INFO","message":"Download progress","data":"[download]   0.0% of  172.32MiB at  Unknown B/s ETA 03:01"}
+{"timestamp":"2024-11-21T09:40:50.274Z","type":"INFO","message":"Download progress","data":"[download]   0.0% of  172.32MiB at    1.10MiB/s ETA 02:36"}
+{"timestamp":"2024-11-21T09:40:50.275Z","type":"INFO","message":"Download progress","data":"[download]   0.0% of  172.32MiB at    1.94MiB/s ETA 01:30"}
+{"timestamp":"2024-11-21T09:40:50.277Z","type":"INFO","message":"Download progress","data":"[download]   0.0% of  172.32MiB at    3.11MiB/s ETA 00:55"}
+{"timestamp":"2024-11-21T09:40:50.278Z","type":"INFO","message":"Download progress","data":"[download]   0.0% of  172.32MiB at    4.94MiB/s ETA 00:34"}
+{"timestamp":"2024-11-21T09:40:50.281Z","type":"INFO","message":"Download progress","data":"[download]   0.0% of  172.32MiB at    6.68MiB/s ETA 00:25"}
+{"timestamp":"2024-11-21T09:40:50.294Z","type":"INFO","message":"Download progress","data":"[download]   0.1% of  172.32MiB at    5.76MiB/s ETA 00:29"}
+{"timestamp":"2024-11-21T09:40:50.309Z","type":"INFO","message":"Download progress","data":"[download]   0.1% of  172.32MiB at    6.66MiB/s ETA 00:25"}
+{"timestamp":"2024-11-21T09:40:50.332Z","type":"INFO","message":"Download progress","data":"[download]   0.3% of  172.32MiB at    8.32MiB/s ETA 00:20"}
+{"timestamp":"2024-11-21T09:40:50.352Z","type":"INFO","message":"Download progress","data":"[download]   0.6% of  172.32MiB at   12.60MiB/s ETA 00:13"}
+{"timestamp":"2024-11-21T09:40:50.376Z","type":"INFO","message":"Download progress","data":"[download]   1.2% of  172.32MiB at   19.18MiB/s ETA 00:08"}
+{"timestamp":"2024-11-21T09:40:50.411Z","type":"INFO","message":"Download progress","data":"[download]   2.3% of  172.32MiB at   28.80MiB/s ETA 00:05"}
+{"timestamp":"2024-11-21T09:40:50.480Z","type":"INFO","message":"Download progress","data":"[download]   4.6% of  172.32MiB at   38.42MiB/s ETA 00:04"}
+{"timestamp":"2024-11-21T09:40:50.513Z","type":"INFO","message":"Download progress","data":"[download]   5.7% of  172.32MiB at   40.89MiB/s ETA 00:03"}
+{"timestamp":"2024-11-21T09:40:50.551Z","type":"INFO","message":"Download progress","data":"[download]   5.7% of  172.32MiB at  Unknown B/s ETA Unknown"}
+{"timestamp":"2024-11-21T09:40:50.552Z","type":"INFO","message":"Download progress","data":"[download]   5.7% of  172.32MiB at    2.23MiB/s ETA 01:13"}
+{"timestamp":"2024-11-21T09:40:50.553Z","type":"INFO","message":"Download progress","data":"[download]   5.7% of  172.32MiB at    2.56MiB/s ETA 01:03"}
+{"timestamp":"2024-11-21T09:40:50.554Z","type":"INFO","message":"Download progress","data":"[download]   5.7% of  172.32MiB at    3.90MiB/s ETA 00:41"}
+{"timestamp":"2024-11-21T09:40:50.555Z","type":"INFO","message":"Download progress","data":"[download]   5.7% of  172.32MiB at    6.35MiB/s ETA 00:25"}
+{"timestamp":"2024-11-21T09:40:50.556Z","type":"INFO","message":"Download progress","data":"[download]   5.8% of  172.32MiB at   10.58MiB/s ETA 00:15"}
+{"timestamp":"2024-11-21T09:40:50.558Z","type":"INFO","message":"Download progress","data":"[download]   5.8% of  172.32MiB at   16.65MiB/s ETA 00:09"}
+{"timestamp":"2024-11-21T09:40:50.577Z","type":"INFO","message":"Download progress","data":"[download]   5.9% of  172.32MiB at    9.52MiB/s ETA 00:17"}
+{"timestamp":"2024-11-21T09:40:50.580Z","type":"INFO","message":"Download progress","data":"[download]   6.0% of  172.32MiB at   16.85MiB/s ETA 00:09"}
+{"timestamp":"2024-11-21T09:40:50.587Z","type":"INFO","message":"Download progress","data":"[download]   6.3% of  172.32MiB at   27.11MiB/s ETA 00:05"}
+{"timestamp":"2024-11-21T09:40:50.603Z","type":"INFO","message":"Download progress","data":"[download]   6.9% of  172.32MiB at   38.43MiB/s ETA 00:04"}
+{"timestamp":"2024-11-21T09:40:50.635Z","type":"INFO","message":"Download progress","data":"[download]   8.0% of  172.32MiB at   47.19MiB/s ETA 00:03"}
+{"timestamp":"2024-11-21T09:40:50.698Z","type":"INFO","message":"Download progress","data":"[download]  10.4% of  172.32MiB at   54.47MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:50.742Z","type":"INFO","message":"Download progress","data":"[download]  11.3% of  172.32MiB at   50.03MiB/s ETA 00:03"}
+{"timestamp":"2024-11-21T09:40:50.770Z","type":"INFO","message":"Download progress","data":"[download]  11.3% of  172.32MiB at  Unknown B/s ETA Unknown"}
+{"timestamp":"2024-11-21T09:40:50.771Z","type":"INFO","message":"Download progress","data":"[download]  11.3% of  172.32MiB at    2.38MiB/s ETA 01:09"}
+{"timestamp":"2024-11-21T09:40:50.772Z","type":"INFO","message":"Download progress","data":"[download]  11.3% of  172.32MiB at    2.73MiB/s ETA 00:56"}
+{"timestamp":"2024-11-21T09:40:50.774Z","type":"INFO","message":"Download progress","data":"[download]  11.3% of  172.32MiB at    3.57MiB/s ETA 00:42"}
+{"timestamp":"2024-11-21T09:40:50.775Z","type":"INFO","message":"Download progress","data":"[download]  11.3% of  172.32MiB at    5.59MiB/s ETA 00:27"}
+{"timestamp":"2024-11-21T09:40:50.776Z","type":"INFO","message":"Download progress","data":"[download]  11.3% of  172.32MiB at    9.41MiB/s ETA 00:16"}
+{"timestamp":"2024-11-21T09:40:50.777Z","type":"INFO","message":"Download progress","data":"[download]  11.4% of  172.32MiB at   15.88MiB/s ETA 00:09"}
+{"timestamp":"2024-11-21T09:40:50.780Z","type":"INFO","message":"Download progress","data":"[download]  11.4% of  172.32MiB at   23.39MiB/s ETA 00:06"}
+{"timestamp":"2024-11-21T09:40:50.785Z","type":"INFO","message":"Download progress","data":"[download]  11.6% of  172.32MiB at   31.72MiB/s ETA 00:04"}
+{"timestamp":"2024-11-21T09:40:50.798Z","type":"INFO","message":"Download progress","data":"[download]  11.9% of  172.32MiB at   35.12MiB/s ETA 00:04"}
+{"timestamp":"2024-11-21T09:40:50.814Z","type":"INFO","message":"Download progress","data":"[download]  12.4% of  172.32MiB at   46.49MiB/s ETA 00:03"}
+{"timestamp":"2024-11-21T09:40:50.851Z","type":"INFO","message":"Download progress","data":"[download]  13.6% of  172.32MiB at   49.06MiB/s ETA 00:03"}
+{"timestamp":"2024-11-21T09:40:50.924Z","type":"INFO","message":"Download progress","data":"[download]  15.9% of  172.32MiB at   51.82MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:50.966Z","type":"INFO","message":"Download progress","data":"[download]  17.1% of  172.32MiB at   50.54MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:50.986Z","type":"INFO","message":"Download progress","data":"[download]  17.1% of  172.32MiB at  Unknown B/s ETA Unknown"}
+{"timestamp":"2024-11-21T09:40:50.987Z","type":"INFO","message":"Download progress","data":"[download]  17.1% of  172.32MiB at    2.18MiB/s ETA 01:06"}
+{"timestamp":"2024-11-21T09:40:50.989Z","type":"INFO","message":"Download progress","data":"[download]  17.1% of  172.32MiB at    2.73MiB/s ETA 00:53"}
+{"timestamp":"2024-11-21T09:40:50.990Z","type":"INFO","message":"Download progress","data":"[download]  17.1% of  172.32MiB at    3.56MiB/s ETA 00:43"}
+{"timestamp":"2024-11-21T09:40:50.991Z","type":"INFO","message":"Download progress","data":"[download]  17.1% of  172.32MiB at    5.54MiB/s ETA 00:25"}
+{"timestamp":"2024-11-21T09:40:50.993Z","type":"INFO","message":"Download progress","data":"[download]  17.1% of  172.32MiB at    8.92MiB/s ETA 00:16"}
+{"timestamp":"2024-11-21T09:40:50.995Z","type":"INFO","message":"Download progress","data":"[download]  17.1% of  172.32MiB at   14.24MiB/s ETA 00:10"}
+{"timestamp":"2024-11-21T09:40:50.996Z","type":"INFO","message":"Download progress","data":"[download]  17.2% of  172.32MiB at   24.17MiB/s ETA 00:05"}
+{"timestamp":"2024-11-21T09:40:50.999Z","type":"INFO","message":"Download progress","data":"[download]  17.3% of  172.32MiB at   39.22MiB/s ETA 00:03"}
+{"timestamp":"2024-11-21T09:40:51.003Z","type":"INFO","message":"Download progress","data":"[download]  17.6% of  172.32MiB at   57.74MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:51.019Z","type":"INFO","message":"Download progress","data":"[download]  18.2% of  172.32MiB at   60.48MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:51.055Z","type":"INFO","message":"Download progress","data":"[download]  19.4% of  172.32MiB at   58.05MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:51.129Z","type":"INFO","message":"Download progress","data":"[download]  21.7% of  172.32MiB at   56.12MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:51.190Z","type":"INFO","message":"Download progress","data":"[download]  22.7% of  172.32MiB at   47.88MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:51.270Z","type":"INFO","message":"Download progress","data":"[download]  22.7% of  172.32MiB at  977.47KiB/s ETA 02:21"}
+{"timestamp":"2024-11-21T09:40:51.272Z","type":"INFO","message":"Download progress","data":"[download]  22.7% of  172.32MiB at    1.45MiB/s ETA 01:32"}
+{"timestamp":"2024-11-21T09:40:51.273Z","type":"INFO","message":"Download progress","data":"[download]  22.7% of  172.32MiB at    1.71MiB/s ETA 01:18"}
+{"timestamp":"2024-11-21T09:40:51.276Z","type":"INFO","message":"Download progress","data":"[download]  22.7% of  172.32MiB at    3.11MiB/s ETA 00:42\r[download]  22.7% of  172.32MiB at    5.63MiB/s ETA 00:23\r[download]  22.8% of  172.32MiB at    9.87MiB/s ETA 00:13\r[download]  22.8% of  172.32MiB at   17.88MiB/s ETA 00:07"}
+{"timestamp":"2024-11-21T09:40:51.277Z","type":"INFO","message":"Download progress","data":"[download]  22.9% of  172.32MiB at   30.77MiB/s ETA 00:04"}
+{"timestamp":"2024-11-21T09:40:51.281Z","type":"INFO","message":"Download progress","data":"[download]  23.0% of  172.32MiB at   43.21MiB/s ETA 00:03"}
+{"timestamp":"2024-11-21T09:40:51.293Z","type":"INFO","message":"Download progress","data":"[download]  23.3% of  172.32MiB at   41.54MiB/s ETA 00:03"}
+{"timestamp":"2024-11-21T09:40:51.308Z","type":"INFO","message":"Download progress","data":"[download]  23.9% of  172.32MiB at   51.16MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:51.345Z","type":"INFO","message":"Download progress","data":"[download]  25.0% of  172.32MiB at   52.45MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:51.423Z","type":"INFO","message":"Download progress","data":"[download]  27.4% of  172.32MiB at   51.89MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:51.453Z","type":"INFO","message":"Download progress","data":"[download]  28.4% of  172.32MiB at   53.48MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:51.473Z","type":"INFO","message":"Download progress","data":"[download]  28.4% of  172.32MiB at  Unknown B/s ETA Unknown"}
+{"timestamp":"2024-11-21T09:40:51.477Z","type":"INFO","message":"Download progress","data":"[download]  28.4% of  172.32MiB at  905.31KiB/s ETA 02:20"}
+{"timestamp":"2024-11-21T09:40:51.479Z","type":"INFO","message":"Download progress","data":"[download]  28.4% of  172.32MiB at    1.03MiB/s ETA 02:00"}
+{"timestamp":"2024-11-21T09:40:51.480Z","type":"INFO","message":"Download progress","data":"[download]  28.4% of  172.32MiB at    1.94MiB/s ETA 01:03"}
+{"timestamp":"2024-11-21T09:40:51.481Z","type":"INFO","message":"Download progress","data":"[download]  28.5% of  172.32MiB at    3.33MiB/s ETA 00:37"}
+{"timestamp":"2024-11-21T09:40:51.483Z","type":"INFO","message":"Download progress","data":"[download]  28.5% of  172.32MiB at    6.08MiB/s ETA 00:20"}
+{"timestamp":"2024-11-21T09:40:51.484Z","type":"INFO","message":"Download progress","data":"[download]  28.5% of  172.32MiB at   10.87MiB/s ETA 00:11"}
+{"timestamp":"2024-11-21T09:40:51.486Z","type":"INFO","message":"Download progress","data":"[download]  28.6% of  172.32MiB at   18.63MiB/s ETA 00:06"}
+{"timestamp":"2024-11-21T09:40:51.488Z","type":"INFO","message":"Download progress","data":"[download]  28.7% of  172.32MiB at   32.80MiB/s ETA 00:03"}
+{"timestamp":"2024-11-21T09:40:51.491Z","type":"INFO","message":"Download progress","data":"[download]  29.0% of  172.32MiB at   54.66MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:51.506Z","type":"INFO","message":"Download progress","data":"[download]  29.6% of  172.32MiB at   59.42MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:51.543Z","type":"INFO","message":"Download progress","data":"[download]  30.8% of  172.32MiB at   56.37MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:51.613Z","type":"INFO","message":"Download progress","data":"[download]  33.1% of  172.32MiB at   57.11MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:51.637Z","type":"INFO","message":"Download progress","data":"[download]  34.0% of  172.32MiB at   58.56MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:51.666Z","type":"INFO","message":"Download progress","data":"[download]  34.0% of  172.32MiB at  Unknown B/s ETA Unknown"}
+{"timestamp":"2024-11-21T09:40:51.667Z","type":"INFO","message":"Download progress","data":"[download]  34.0% of  172.32MiB at  Unknown B/s ETA Unknown"}
+{"timestamp":"2024-11-21T09:40:51.668Z","type":"INFO","message":"Download progress","data":"[download]  34.0% of  172.32MiB at    2.70MiB/s ETA 00:42"}
+{"timestamp":"2024-11-21T09:40:51.669Z","type":"INFO","message":"Download progress","data":"[download]  34.0% of  172.32MiB at    4.63MiB/s ETA 00:24"}
+{"timestamp":"2024-11-21T09:40:51.671Z","type":"INFO","message":"Download progress","data":"[download]  34.0% of  172.32MiB at    6.81MiB/s ETA 00:16"}
+{"timestamp":"2024-11-21T09:40:51.672Z","type":"INFO","message":"Download progress","data":"[download]  34.1% of  172.32MiB at    9.72MiB/s ETA 00:11"}
+{"timestamp":"2024-11-21T09:40:51.674Z","type":"INFO","message":"Download progress","data":"[download]  34.1% of  172.32MiB at   15.81MiB/s ETA 00:07"}
+{"timestamp":"2024-11-21T09:40:51.675Z","type":"INFO","message":"Download progress","data":"[download]  34.2% of  172.32MiB at   26.45MiB/s ETA 00:04"}
+{"timestamp":"2024-11-21T09:40:51.678Z","type":"INFO","message":"Download progress","data":"[download]  34.3% of  172.32MiB at   41.12MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:51.681Z","type":"INFO","message":"Download progress","data":"[download]  34.6% of  172.32MiB at   64.23MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:51.698Z","type":"INFO","message":"Download progress","data":"[download]  35.2% of  172.32MiB at   62.70MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:51.727Z","type":"INFO","message":"Download progress","data":"[download]  36.3% of  172.32MiB at   66.02MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:51.796Z","type":"INFO","message":"Download progress","data":"[download]  38.7% of  172.32MiB at   61.75MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:51.819Z","type":"INFO","message":"Download progress","data":"[download]  39.7% of  172.32MiB at   64.03MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:51.857Z","type":"INFO","message":"Download progress","data":"[download]  39.7% of  172.32MiB at  Unknown B/s ETA Unknown"}
+{"timestamp":"2024-11-21T09:40:51.858Z","type":"INFO","message":"Download progress","data":"[download]  39.7% of  172.32MiB at  Unknown B/s ETA Unknown"}
+{"timestamp":"2024-11-21T09:40:51.859Z","type":"INFO","message":"Download progress","data":"[download]  39.7% of  172.32MiB at    3.31MiB/s ETA 00:31"}
+{"timestamp":"2024-11-21T09:40:51.860Z","type":"INFO","message":"Download progress","data":"[download]  39.7% of  172.32MiB at    4.55MiB/s ETA 00:23"}
+{"timestamp":"2024-11-21T09:40:51.862Z","type":"INFO","message":"Download progress","data":"[download]  39.7% of  172.32MiB at    6.99MiB/s ETA 00:14"}
+{"timestamp":"2024-11-21T09:40:51.864Z","type":"INFO","message":"Download progress","data":"[download]  39.7% of  172.32MiB at    8.98MiB/s ETA 00:11"}
+{"timestamp":"2024-11-21T09:40:51.865Z","type":"INFO","message":"Download progress","data":"[download]  39.8% of  172.32MiB at   14.81MiB/s ETA 00:07"}
+{"timestamp":"2024-11-21T09:40:51.867Z","type":"INFO","message":"Download progress","data":"[download]  39.9% of  172.32MiB at   25.16MiB/s ETA 00:04"}
+{"timestamp":"2024-11-21T09:40:51.869Z","type":"INFO","message":"Download progress","data":"[download]  40.0% of  172.32MiB at   40.25MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:51.873Z","type":"INFO","message":"Download progress","data":"[download]  40.3% of  172.32MiB at   64.69MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:51.886Z","type":"INFO","message":"Download progress","data":"[download]  40.9% of  172.32MiB at   68.54MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:51.914Z","type":"INFO","message":"Download progress","data":"[download]  42.0% of  172.32MiB at   70.60MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:51.977Z","type":"INFO","message":"Download progress","data":"[download]  44.4% of  172.32MiB at   66.90MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:52.009Z","type":"INFO","message":"Download progress","data":"[download]  45.4% of  172.32MiB at   64.54MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:52.036Z","type":"INFO","message":"Download progress","data":"[download]  45.4% of  172.32MiB at  807.84KiB/s ETA 02:00"}
+{"timestamp":"2024-11-21T09:40:52.037Z","type":"INFO","message":"Download progress","data":"[download]  45.4% of  172.32MiB at    1.33MiB/s ETA 01:11"}
+{"timestamp":"2024-11-21T09:40:52.039Z","type":"INFO","message":"Download progress","data":"[download]  45.4% of  172.32MiB at    1.80MiB/s ETA 00:52"}
+{"timestamp":"2024-11-21T09:40:52.040Z","type":"INFO","message":"Download progress","data":"[download]  45.4% of  172.32MiB at    2.40MiB/s ETA 00:39"}
+{"timestamp":"2024-11-21T09:40:52.041Z","type":"INFO","message":"Download progress","data":"[download]  45.4% of  172.32MiB at    4.26MiB/s ETA 00:22"}
+{"timestamp":"2024-11-21T09:40:52.043Z","type":"INFO","message":"Download progress","data":"[download]  45.4% of  172.32MiB at    7.59MiB/s ETA 00:12"}
+{"timestamp":"2024-11-21T09:40:52.044Z","type":"INFO","message":"Download progress","data":"[download]  45.5% of  172.32MiB at   12.88MiB/s ETA 00:07"}
+{"timestamp":"2024-11-21T09:40:52.046Z","type":"INFO","message":"Download progress","data":"[download]  45.5% of  172.32MiB at   21.91MiB/s ETA 00:04"}
+{"timestamp":"2024-11-21T09:40:52.048Z","type":"INFO","message":"Download progress","data":"[download]  45.7% of  172.32MiB at   35.72MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:52.055Z","type":"INFO","message":"Download progress","data":"[download]  46.0% of  172.32MiB at   49.22MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:52.069Z","type":"INFO","message":"Download progress","data":"[download]  46.5% of  172.32MiB at   58.23MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:52.114Z","type":"INFO","message":"Download progress","data":"[download]  47.7% of  172.32MiB at   50.36MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:52.169Z","type":"INFO","message":"Download progress","data":"[download]  50.0% of  172.32MiB at   59.54MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:52.188Z","type":"INFO","message":"Download progress","data":"[download]  51.1% of  172.32MiB at   63.34MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:52.238Z","type":"INFO","message":"Download progress","data":"[download]  51.1% of  172.32MiB at  Unknown B/s ETA Unknown"}
+{"timestamp":"2024-11-21T09:40:52.239Z","type":"INFO","message":"Download progress","data":"[download]  51.1% of  172.32MiB at  Unknown B/s ETA Unknown"}
+{"timestamp":"2024-11-21T09:40:52.240Z","type":"INFO","message":"Download progress","data":"[download]  51.1% of  172.32MiB at    3.33MiB/s ETA 00:25"}
+{"timestamp":"2024-11-21T09:40:52.242Z","type":"INFO","message":"Download progress","data":"[download]  51.1% of  172.32MiB at    3.96MiB/s ETA 00:21"}
+{"timestamp":"2024-11-21T09:40:52.244Z","type":"INFO","message":"Download progress","data":"[download]  51.1% of  172.32MiB at    5.02MiB/s ETA 00:16"}
+{"timestamp":"2024-11-21T09:40:52.246Z","type":"INFO","message":"Download progress","data":"[download]  51.1% of  172.32MiB at    7.84MiB/s ETA 00:10"}
+{"timestamp":"2024-11-21T09:40:52.249Z","type":"INFO","message":"Download progress","data":"[download]  51.1% of  172.32MiB at   11.32MiB/s ETA 00:07"}
+{"timestamp":"2024-11-21T09:40:52.250Z","type":"INFO","message":"Download progress","data":"[download]  51.2% of  172.32MiB at   19.84MiB/s ETA 00:04"}
+{"timestamp":"2024-11-21T09:40:52.252Z","type":"INFO","message":"Download progress","data":"[download]  51.3% of  172.32MiB at   34.65MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:52.254Z","type":"INFO","message":"Download progress","data":"[download]  51.6% of  172.32MiB at   61.09MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:52.267Z","type":"INFO","message":"Download progress","data":"[download]  52.2% of  172.32MiB at   68.78MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:52.298Z","type":"INFO","message":"Download progress","data":"[download]  53.4% of  172.32MiB at   66.00MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:52.353Z","type":"INFO","message":"Download progress","data":"[download]  55.7% of  172.32MiB at   69.40MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:52.378Z","type":"INFO","message":"Download progress","data":"[download]  56.8% of  172.32MiB at   71.12MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:52.414Z","type":"INFO","message":"Download progress","data":"[download]  56.8% of  172.32MiB at  Unknown B/s ETA Unknown"}
+{"timestamp":"2024-11-21T09:40:52.414Z","type":"INFO","message":"Download progress","data":"[download]  56.8% of  172.32MiB at  Unknown B/s ETA Unknown"}
+{"timestamp":"2024-11-21T09:40:52.417Z","type":"INFO","message":"Download progress","data":"[download]  56.8% of  172.32MiB at    2.85MiB/s ETA 00:26"}
+{"timestamp":"2024-11-21T09:40:52.420Z","type":"INFO","message":"Download progress","data":"[download]  56.8% of  172.32MiB at    2.80MiB/s ETA 00:26"}
+{"timestamp":"2024-11-21T09:40:52.420Z","type":"INFO","message":"Download progress","data":"[download]  56.8% of  172.32MiB at    4.46MiB/s ETA 00:16"}
+{"timestamp":"2024-11-21T09:40:52.422Z","type":"INFO","message":"Download progress","data":"[download]  56.9% of  172.32MiB at    7.19MiB/s ETA 00:10"}
+{"timestamp":"2024-11-21T09:40:52.427Z","type":"INFO","message":"Download progress","data":"[download]  56.9% of  172.32MiB at   11.05MiB/s ETA 00:06"}
+{"timestamp":"2024-11-21T09:40:52.429Z","type":"INFO","message":"Download progress","data":"[download]  57.0% of  172.32MiB at   16.60MiB/s ETA 00:04"}
+{"timestamp":"2024-11-21T09:40:52.430Z","type":"INFO","message":"Download progress","data":"[download]  57.1% of  172.32MiB at   29.77MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:52.436Z","type":"INFO","message":"Download progress","data":"[download]  57.4% of  172.32MiB at   45.91MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:52.444Z","type":"INFO","message":"Download progress","data":"[download]  58.0% of  172.32MiB at   65.82MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:52.472Z","type":"INFO","message":"Download progress","data":"[download]  59.1% of  172.32MiB at   70.26MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:52.534Z","type":"INFO","message":"Download progress","data":"[download]  61.5% of  172.32MiB at   66.74MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:52.552Z","type":"INFO","message":"Download progress","data":"[download]  62.4% of  172.32MiB at   69.86MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:52.602Z","type":"INFO","message":"Download progress","data":"[download]  62.4% of  172.32MiB at  Unknown B/s ETA Unknown"}
+{"timestamp":"2024-11-21T09:40:52.603Z","type":"INFO","message":"Download progress","data":"[download]  62.4% of  172.32MiB at  Unknown B/s ETA Unknown"}
+{"timestamp":"2024-11-21T09:40:52.604Z","type":"INFO","message":"Download progress","data":"[download]  62.4% of  172.32MiB at    3.92MiB/s ETA 00:16"}
+{"timestamp":"2024-11-21T09:40:52.605Z","type":"INFO","message":"Download progress","data":"[download]  62.4% of  172.32MiB at    5.85MiB/s ETA 00:11"}
+{"timestamp":"2024-11-21T09:40:52.606Z","type":"INFO","message":"Download progress","data":"[download]  62.4% of  172.32MiB at    9.04MiB/s ETA 00:07"}
+{"timestamp":"2024-11-21T09:40:52.608Z","type":"INFO","message":"Download progress","data":"[download]  62.4% of  172.32MiB at   12.58MiB/s ETA 00:05"}
+{"timestamp":"2024-11-21T09:40:52.610Z","type":"INFO","message":"Download progress","data":"[download]  62.5% of  172.32MiB at   15.30MiB/s ETA 00:04"}
+{"timestamp":"2024-11-21T09:40:52.612Z","type":"INFO","message":"Download progress","data":"[download]  62.5% of  172.32MiB at   26.29MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:52.628Z","type":"INFO","message":"Download progress","data":"[download]  62.7% of  172.32MiB at   19.66MiB/s ETA 00:03"}
+{"timestamp":"2024-11-21T09:40:52.635Z","type":"INFO","message":"Download progress","data":"[download]  63.0% of  172.32MiB at   30.90MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:52.646Z","type":"INFO","message":"Download progress","data":"[download]  63.6% of  172.32MiB at   45.50MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:52.684Z","type":"INFO","message":"Download progress","data":"[download]  64.7% of  172.32MiB at   49.39MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:52.756Z","type":"INFO","message":"Download progress","data":"[download]  67.0% of  172.32MiB at   52.06MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:52.765Z","type":"INFO","message":"Download progress","data":"[download]  67.9% of  172.32MiB at   58.44MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:52.809Z","type":"INFO","message":"Download progress","data":"[download]  67.9% of  172.32MiB at  Unknown B/s ETA Unknown"}
+{"timestamp":"2024-11-21T09:40:52.814Z","type":"INFO","message":"Download progress","data":"[download]  67.9% of  172.32MiB at    1.38MiB/s ETA 00:40"}
+{"timestamp":"2024-11-21T09:40:52.830Z","type":"INFO","message":"Download progress","data":"[download]  67.9% of  172.32MiB at  330.57KiB/s ETA 02:51"}
+{"timestamp":"2024-11-21T09:40:52.832Z","type":"INFO","message":"Download progress","data":"[download]  67.9% of  172.32MiB at  675.22KiB/s ETA 01:23"}
+{"timestamp":"2024-11-21T09:40:52.836Z","type":"INFO","message":"Download progress","data":"[download]  67.9% of  172.32MiB at    1.12MiB/s ETA 00:49"}
+{"timestamp":"2024-11-21T09:40:52.838Z","type":"INFO","message":"Download progress","data":"[download]  68.0% of  172.32MiB at    2.15MiB/s ETA 00:25"}
+{"timestamp":"2024-11-21T09:40:52.843Z","type":"INFO","message":"Download progress","data":"[download]  68.0% of  172.32MiB at    3.98MiB/s ETA 00:13"}
+{"timestamp":"2024-11-21T09:40:52.852Z","type":"INFO","message":"Download progress","data":"[download]  68.1% of  172.32MiB at    6.20MiB/s ETA 00:08"}
+{"timestamp":"2024-11-21T09:40:52.856Z","type":"INFO","message":"Download progress","data":"[download]  68.2% of  172.32MiB at   11.02MiB/s ETA 00:04"}
+{"timestamp":"2024-11-21T09:40:52.862Z","type":"INFO","message":"Download progress","data":"[download]  68.5% of  172.32MiB at   18.86MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:52.868Z","type":"INFO","message":"Download progress","data":"[download]  69.1% of  172.32MiB at   33.74MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:52.882Z","type":"INFO","message":"Download progress","data":"[download]  70.2% of  172.32MiB at   58.13MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:52.941Z","type":"INFO","message":"Download progress","data":"[download]  72.6% of  172.32MiB at   60.59MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:52.964Z","type":"INFO","message":"Download progress","data":"[download]  73.4% of  172.32MiB at   61.34MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:52.987Z","type":"INFO","message":"Download progress","data":"[download]  73.4% of  172.32MiB at  Unknown B/s ETA Unknown"}
+{"timestamp":"2024-11-21T09:40:52.988Z","type":"INFO","message":"Download progress","data":"[download]  73.4% of  172.32MiB at    2.63MiB/s ETA 00:17"}
+{"timestamp":"2024-11-21T09:40:52.989Z","type":"INFO","message":"Download progress","data":"[download]  73.4% of  172.32MiB at    3.55MiB/s ETA 00:12"}
+{"timestamp":"2024-11-21T09:40:52.990Z","type":"INFO","message":"Download progress","data":"[download]  73.4% of  172.32MiB at    4.63MiB/s ETA 00:09"}
+{"timestamp":"2024-11-21T09:40:52.992Z","type":"INFO","message":"Download progress","data":"[download]  73.5% of  172.32MiB at    6.42MiB/s ETA 00:07"}
+{"timestamp":"2024-11-21T09:40:53.002Z","type":"INFO","message":"Download progress","data":"[download]  73.5% of  172.32MiB at    5.67MiB/s ETA 00:08"}
+{"timestamp":"2024-11-21T09:40:53.004Z","type":"INFO","message":"Download progress","data":"[download]  73.5% of  172.32MiB at    7.12MiB/s ETA 00:06"}
+{"timestamp":"2024-11-21T09:40:53.005Z","type":"INFO","message":"Download progress","data":"[download]  73.6% of  172.32MiB at   13.20MiB/s ETA 00:03"}
+{"timestamp":"2024-11-21T09:40:53.009Z","type":"INFO","message":"Download progress","data":"[download]  73.7% of  172.32MiB at   23.04MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:53.013Z","type":"INFO","message":"Download progress","data":"[download]  74.0% of  172.32MiB at   37.48MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:53.019Z","type":"INFO","message":"Download progress","data":"[download]  74.6% of  172.32MiB at   60.90MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.052Z","type":"INFO","message":"Download progress","data":"[download]  75.8% of  172.32MiB at   61.62MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.103Z","type":"INFO","message":"Download progress","data":"[download]  78.1% of  172.32MiB at   68.81MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.129Z","type":"INFO","message":"Download progress","data":"[download]  79.1% of  172.32MiB at   68.90MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.163Z","type":"INFO","message":"Download progress","data":"[download]  79.1% of  172.32MiB at  356.51KiB/s ETA 01:44"}
+{"timestamp":"2024-11-21T09:40:53.166Z","type":"INFO","message":"Download progress","data":"[download]  79.1% of  172.32MiB at  422.67KiB/s ETA 01:27"}
+{"timestamp":"2024-11-21T09:40:53.167Z","type":"INFO","message":"Download progress","data":"[download]  79.1% of  172.32MiB at  732.45KiB/s ETA 00:50"}
+{"timestamp":"2024-11-21T09:40:53.168Z","type":"INFO","message":"Download progress","data":"[download]  79.1% of  172.32MiB at    1.42MiB/s ETA 00:25"}
+{"timestamp":"2024-11-21T09:40:53.169Z","type":"INFO","message":"Download progress","data":"[download]  79.2% of  172.32MiB at    2.56MiB/s ETA 00:14"}
+{"timestamp":"2024-11-21T09:40:53.171Z","type":"INFO","message":"Download progress","data":"[download]  79.2% of  172.32MiB at    4.60MiB/s ETA 00:07"}
+{"timestamp":"2024-11-21T09:40:53.172Z","type":"INFO","message":"Download progress","data":"[download]  79.2% of  172.32MiB at    8.51MiB/s ETA 00:04"}
+{"timestamp":"2024-11-21T09:40:53.174Z","type":"INFO","message":"Download progress","data":"[download]  79.3% of  172.32MiB at   15.30MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:53.177Z","type":"INFO","message":"Download progress","data":"[download]  79.4% of  172.32MiB at   25.97MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:53.180Z","type":"INFO","message":"Download progress","data":"[download]  79.7% of  172.32MiB at   45.37MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.197Z","type":"INFO","message":"Download progress","data":"[download]  80.3% of  172.32MiB at   50.24MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.227Z","type":"INFO","message":"Download progress","data":"[download]  81.5% of  172.32MiB at   58.09MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.281Z","type":"INFO","message":"Download progress","data":"[download]  83.8% of  172.32MiB at   64.90MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.304Z","type":"INFO","message":"Download progress","data":"[download]  84.8% of  172.32MiB at   66.34MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.328Z","type":"INFO","message":"Download progress","data":"[download]  84.8% of  172.32MiB at  Unknown B/s ETA Unknown"}
+{"timestamp":"2024-11-21T09:40:53.329Z","type":"INFO","message":"Download progress","data":"[download]  84.8% of  172.32MiB at    2.88MiB/s ETA 00:09"}
+{"timestamp":"2024-11-21T09:40:53.330Z","type":"INFO","message":"Download progress","data":"[download]  84.8% of  172.32MiB at    2.60MiB/s ETA 00:10"}
+{"timestamp":"2024-11-21T09:40:53.331Z","type":"INFO","message":"Download progress","data":"[download]  84.8% of  172.32MiB at    4.48MiB/s ETA 00:05"}
+{"timestamp":"2024-11-21T09:40:53.334Z","type":"INFO","message":"Download progress","data":"[download]  84.8% of  172.32MiB at    6.38MiB/s ETA 00:04"}
+{"timestamp":"2024-11-21T09:40:53.339Z","type":"INFO","message":"Download progress","data":"[download]  84.8% of  172.32MiB at    7.97MiB/s ETA 00:03"}
+{"timestamp":"2024-11-21T09:40:53.341Z","type":"INFO","message":"Download progress","data":"[download]  84.8% of  172.32MiB at    9.39MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:53.343Z","type":"INFO","message":"Download progress","data":"[download]  84.9% of  172.32MiB at   16.87MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:53.344Z","type":"INFO","message":"Download progress","data":"[download]  85.0% of  172.32MiB at   30.06MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.347Z","type":"INFO","message":"Download progress","data":"[download]  85.3% of  172.32MiB at   53.06MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.353Z","type":"INFO","message":"Download progress","data":"[download]  85.9% of  172.32MiB at   79.84MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.385Z","type":"INFO","message":"Download progress","data":"[download]  87.1% of  172.32MiB at   71.33MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.463Z","type":"INFO","message":"Download progress","data":"[download]  89.4% of  172.32MiB at   59.40MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.495Z","type":"INFO","message":"Download progress","data":"[download]  90.4% of  172.32MiB at   58.82MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.586Z","type":"INFO","message":"Download progress","data":"[download]  90.4% of  172.32MiB at  713.92KiB/s ETA 00:23"}
+{"timestamp":"2024-11-21T09:40:53.588Z","type":"INFO","message":"Download progress","data":"[download]  90.4% of  172.32MiB at    1.11MiB/s ETA 00:14"}
+{"timestamp":"2024-11-21T09:40:53.589Z","type":"INFO","message":"Download progress","data":"[download]  90.4% of  172.32MiB at    1.82MiB/s ETA 00:09"}
+{"timestamp":"2024-11-21T09:40:53.590Z","type":"INFO","message":"Download progress","data":"[download]  90.4% of  172.32MiB at    2.78MiB/s ETA 00:05"}
+{"timestamp":"2024-11-21T09:40:53.592Z","type":"INFO","message":"Download progress","data":"[download]  90.5% of  172.32MiB at    4.42MiB/s ETA 00:03"}
+{"timestamp":"2024-11-21T09:40:53.593Z","type":"INFO","message":"Download progress","data":"[download]  90.5% of  172.32MiB at    7.21MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:53.595Z","type":"INFO","message":"Download progress","data":"[download]  90.5% of  172.32MiB at   12.58MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:53.597Z","type":"INFO","message":"Download progress","data":"[download]  90.6% of  172.32MiB at   21.86MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.599Z","type":"INFO","message":"Download progress","data":"[download]  90.7% of  172.32MiB at   35.88MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.605Z","type":"INFO","message":"Download progress","data":"[download]  91.0% of  172.32MiB at   50.91MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.615Z","type":"INFO","message":"Download progress","data":"[download]  91.6% of  172.32MiB at   66.88MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.659Z","type":"INFO","message":"Download progress","data":"[download]  92.8% of  172.32MiB at   54.65MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.718Z","type":"INFO","message":"Download progress","data":"[download]  95.1% of  172.32MiB at   60.43MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.733Z","type":"INFO","message":"Download progress","data":"[download]  96.0% of  172.32MiB at   64.18MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.767Z","type":"INFO","message":"Download progress","data":"[download]  96.0% of  172.32MiB at  Unknown B/s ETA Unknown"}
+{"timestamp":"2024-11-21T09:40:53.769Z","type":"INFO","message":"Download progress","data":"[download]  96.0% of  172.32MiB at  Unknown B/s ETA Unknown"}
+{"timestamp":"2024-11-21T09:40:53.770Z","type":"INFO","message":"Download progress","data":"[download]  96.0% of  172.32MiB at    3.29MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:53.771Z","type":"INFO","message":"Download progress","data":"[download]  96.0% of  172.32MiB at    4.23MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:53.773Z","type":"INFO","message":"Download progress","data":"[download]  96.0% of  172.32MiB at    6.32MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:53.774Z","type":"INFO","message":"Download progress","data":"[download]  96.0% of  172.32MiB at    9.25MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.776Z","type":"INFO","message":"Download progress","data":"[download]  96.0% of  172.32MiB at   15.42MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.777Z","type":"INFO","message":"Download progress","data":"[download]  96.1% of  172.32MiB at   25.32MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.780Z","type":"INFO","message":"Download progress","data":"[download]  96.2% of  172.32MiB at   42.16MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.784Z","type":"INFO","message":"Download progress","data":"[download]  96.5% of  172.32MiB at   62.56MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.796Z","type":"INFO","message":"Download progress","data":"[download]  97.1% of  172.32MiB at   70.98MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.821Z","type":"INFO","message":"Download progress","data":"[download]  98.3% of  172.32MiB at   74.73MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.868Z","type":"INFO","message":"Download progress","data":"[download] 100.0% of  172.32MiB at   69.23MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.874Z","type":"INFO","message":"Download progress","data":"[download] 100% of  172.32MiB in 00:00:03 at 45.17MiB/s"}
+{"timestamp":"2024-11-21T09:40:53.875Z","type":"INFO","message":"Download progress","data":""}
+{"timestamp":"2024-11-21T09:40:53.899Z","type":"INFO","message":"Download progress","data":"[download] Destination: /Users/ctb_ceo/A2B downloader/downloads/1732182044097.temp.mp4.f251.webm"}
+{"timestamp":"2024-11-21T09:40:53.900Z","type":"INFO","message":"Download progress","data":"[download]   0.0% of    3.33MiB at  Unknown B/s ETA Unknown"}
+{"timestamp":"2024-11-21T09:40:53.901Z","type":"INFO","message":"Download progress","data":"[download]   0.1% of    3.33MiB at    1.35MiB/s ETA 00:02"}
+{"timestamp":"2024-11-21T09:40:53.902Z","type":"INFO","message":"Download progress","data":"[download]   0.2% of    3.33MiB at    1.98MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:53.904Z","type":"INFO","message":"Download progress","data":"[download]   0.4% of    3.33MiB at    3.15MiB/s ETA 00:01"}
+{"timestamp":"2024-11-21T09:40:53.907Z","type":"INFO","message":"Download progress","data":"[download]   0.9% of    3.33MiB at    3.76MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.909Z","type":"INFO","message":"Download progress","data":"[download]   1.8% of    3.33MiB at    6.13MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.910Z","type":"INFO","message":"Download progress","data":"[download]   3.7% of    3.33MiB at   10.74MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.919Z","type":"INFO","message":"Download progress","data":"[download]   7.5% of    3.33MiB at   16.10MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.923Z","type":"INFO","message":"Download progress","data":"[download]  15.0% of    3.33MiB at   20.81MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.925Z","type":"INFO","message":"Download progress","data":"[download]  30.0% of    3.33MiB at   37.73MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.930Z","type":"INFO","message":"Download progress","data":"[download]  60.0% of    3.33MiB at   64.51MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.951Z","type":"INFO","message":"Download progress","data":"[download] 100.0% of    3.33MiB at   63.94MiB/s ETA 00:00"}
+{"timestamp":"2024-11-21T09:40:53.954Z","type":"INFO","message":"Download progress","data":"[download] 100% of    3.33MiB in 00:00:00 at 42.87MiB/s"}
+{"timestamp":"2024-11-21T09:40:53.954Z","type":"INFO","message":"Download progress","data":""}
+{"timestamp":"2024-11-21T09:40:53.980Z","type":"INFO","message":"Download progress","data":"[Merger] Merging formats into \"/Users/ctb_ceo/A2B downloader/downloads/1732182044097.temp.mp4.webm\""}
+{"timestamp":"2024-11-21T09:40:54.523Z","type":"INFO","message":"Download progress","data":"Deleting original file /Users/ctb_ceo/A2B downloader/downloads/1732182044097.temp.mp4.f251.webm (pass -k to keep)"}
+{"timestamp":"2024-11-21T09:40:54.524Z","type":"INFO","message":"Download progress","data":"Deleting original file /Users/ctb_ceo/A2B downloader/downloads/1732182044097.temp.mp4.f401.mp4 (pass -k to keep)"}
