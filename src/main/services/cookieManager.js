@@ -19,7 +19,7 @@ class CookieManager {
     }
 
     async initializeCluster() {
-        if (this.isClusterInitialized) {
+        if (this.isClusterInitialized && this.cluster) {
             console.info('Puppeteer Cluster is already initialized.');
             return this.cluster;
         }
@@ -31,8 +31,9 @@ class CookieManager {
                 concurrency: Cluster.CONCURRENCY_CONTEXT,
                 maxConcurrency: this.config.maxConcurrency,
                 timeout: this.config.timeout,
+                monitor: true,
                 puppeteerOptions: {
-                    headless: true, // Retain headless mode for efficiency
+                    headless: true,
                     args: [
                         '--disable-gpu',
                         '--no-sandbox',
@@ -41,51 +42,104 @@ class CookieManager {
                         '--no-zygote',
                         '--single-process',
                         '--disable-extensions',
-                        '--window-size=1920,1080', // Simulate a standard browser environment
+                        '--window-size=1920,1080',
                     ],
+                    defaultViewport: {
+                        width: 1920,
+                        height: 1080
+                    }
                 },
                 retryLimit: this.config.maxRetries,
             });
 
-            // Define a task for fetching cookies
+            // Add cluster event handlers for better error tracking
+            this.cluster.on('taskerror', (err, data) => {
+                console.error(`Task error:`, err, 'Data:', data);
+            });
+
+            this.cluster.on('queue', (data) => {
+                console.log(`Task queued:`, data);
+            });
+
+            // Define a task for fetching cookies with enhanced error handling
             this.cluster.task(async ({ page, data: { url } }) => {
+                if (!page) {
+                    throw new Error('Page object is undefined');
+                }
+
                 try {
+                    await page.setDefaultNavigationTimeout(30000);
                     console.info(`Navigating to URL: ${url}`);
+                    
+                    // Set a more recent user agent
                     await page.setUserAgent(
-                        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+                        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
                     );
-                    await page.goto(url, { waitUntil: 'networkidle2' });
+
+                    // Enhanced page navigation with proper error handling
+                    const response = await page.goto(url, {
+                        waitUntil: 'networkidle2',
+                        timeout: 30000
+                    });
+
+                    if (!response) {
+                        throw new Error('Navigation failed - no response received');
+                    }
+
+                    if (!response.ok()) {
+                        throw new Error(`Failed to load page: ${response.status()} ${response.statusText()}`);
+                    }
+
+                    // Wait for any potential JavaScript redirects
+                    await page.waitForTimeout(2000);
+
                     const cookies = await page.cookies();
-                    console.info(`Cookies fetched successfully for URL: ${url}`);
+                    
+                    if (!cookies || !Array.isArray(cookies)) {
+                        throw new Error('Invalid cookie response from page');
+                    }
+
+                    console.info(`Successfully fetched ${cookies.length} cookies for URL: ${url}`);
                     return cookies;
                 } catch (error) {
-                    console.error(`Error during cookie fetch for URL (${url}):`, error);
-                    throw new Error(`Failed to fetch cookies for ${url}: ${error.message}`);
+                    console.error(`Detailed error in task execution for ${url}:`, error);
+                    throw error;
                 }
             });
 
             console.info('Puppeteer Cluster initialized successfully.');
-            this.isClusterInitialized = true; // Mark initialization as complete
+            this.isClusterInitialized = true;
             return this.cluster;
         } catch (error) {
             console.error('Error initializing Puppeteer Cluster:', error);
+            this.isClusterInitialized = false;
+            this.cluster = null;
             throw error;
         }
     }
 
     async fetchCookies(url) {
         try {
-            if (!this.isClusterInitialized) {
-                throw new Error('Cluster is not initialized. Please initialize the cluster before fetching cookies.');
+            if (!this.isClusterInitialized || !this.cluster) {
+                await this.initializeCluster();
+            }
+
+            if (!url) {
+                throw new Error('URL is required for fetching cookies');
             }
 
             console.info(`Fetching cookies for URL: ${url}`);
             const cookies = await this.cluster.execute({ url });
+
+            if (!cookies || !Array.isArray(cookies)) {
+                throw new Error('Invalid cookie response from cluster');
+            }
+
             console.info(`Fetched ${cookies.length} cookies for URL: ${url}`);
             return cookies;
         } catch (error) {
             console.error(`Error fetching cookies for URL (${url}):`, error);
-            throw error; // Throw the error for better diagnostics
+            throw error;
         }
     }
 
@@ -122,20 +176,21 @@ class CookieManager {
     }
 
     async cleanup() {
-        if (!this.isClusterInitialized) {
+        if (!this.isClusterInitialized || !this.cluster) {
             console.info('Puppeteer Cluster is not initialized, skipping cleanup.');
             return;
         }
 
         try {
             console.info('Closing Puppeteer Cluster...');
-            await this.cluster.idle(); // Wait for all tasks to finish
-            await this.cluster.close(); // Close the cluster
+            await this.cluster.idle();
+            await this.cluster.close();
             this.cluster = null;
-            this.isClusterInitialized = false; // Reset initialization flag
+            this.isClusterInitialized = false;
             console.info('Puppeteer Cluster closed successfully.');
         } catch (error) {
             console.error('Error during Puppeteer Cluster cleanup:', error);
+            throw error;
         }
     }
 }
