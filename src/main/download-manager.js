@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const electronLog = require('electron-log');
 const configManager = require('./config-manager');
-const { fetchCookies } = require('./services/cookie-manager');
+const { fetchCookies } = require('./services/cookieManager');
 const readline = require('readline');
 
 class DownloadManager {
