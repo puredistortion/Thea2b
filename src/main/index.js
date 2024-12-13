@@ -11,8 +11,8 @@ electronLog.transports.file.level = 'info';
 electronLog.transports.console.level = 'debug';
 
 let mainWindow = null;
-let appInitialized = false; // Guard to prevent duplicate initialization
-let ipcInitialized = false; // Guard to prevent duplicate IPC setup
+let appInitialized = false; // Prevent duplicate initialization
+let ipcInitialized = false; // Prevent duplicate IPC setup
 const registeredHandlers = new Set();
 let isQuitting = false;
 
@@ -104,6 +104,16 @@ const setupIPC = () => {
             return { success: true, message: 'Download completed successfully.' };
         } catch (error) {
             electronLog.error('Error during download:', error);
+            return { success: false, error: error.message };
+        }
+    });
+
+    registerHandler('get-download-location', async () => {
+        try {
+            const location = configManager.getDownloadLocation();
+            return { success: true, location };
+        } catch (error) {
+            electronLog.error('Error fetching download location:', error);
             return { success: false, error: error.message };
         }
     });
