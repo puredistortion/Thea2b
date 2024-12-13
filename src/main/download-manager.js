@@ -15,7 +15,7 @@ class DownloadManager {
         try {
             electronLog.info('Initializing DownloadManager...');
             await configManager.init();
-            electronLog.info('DownloadManager initialized successfully');
+            electronLog.info('DownloadManager initialized successfully.');
         } catch (error) {
             electronLog.error('Failed to initialize DownloadManager:', error);
             throw error;
@@ -57,7 +57,7 @@ class DownloadManager {
                 '--no-warnings',
                 '--progress', '--newline',
                 '--no-playlist',
-                '--console-title'
+                '--console-title',
             ];
 
             // Handle cookies
@@ -80,6 +80,7 @@ class DownloadManager {
             electronLog.info('Spawning yt-dlp with args:', args);
             const downloadProcess = spawn('yt-dlp', args);
 
+            // Handle process output
             downloadProcess.stdout.on('data', (data) => {
                 const output = data.toString();
                 readline.clearLine(process.stdout, 0);
@@ -118,8 +119,9 @@ class DownloadManager {
     }
 
     async cleanup() {
+        electronLog.info('DownloadManager cleanup started...');
+        // Cleanup any persistent resources if necessary
         electronLog.info('DownloadManager cleanup completed.');
-        // No persistent resources to clean in this approach
     }
 }
 

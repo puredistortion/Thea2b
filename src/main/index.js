@@ -11,7 +11,8 @@ electronLog.transports.file.level = 'info';
 electronLog.transports.console.level = 'debug';
 
 let mainWindow = null;
-let appInitialized = false; // Prevent duplicate initialization
+let appInitialized = false; // Guard to prevent duplicate initialization
+let ipcInitialized = false; // Guard to prevent duplicate IPC setup
 const registeredHandlers = new Set();
 let isQuitting = false;
 
@@ -48,7 +49,7 @@ const validateCookies = (cookies) => {
         return [];
     }
     if (!Array.isArray(cookies)) return [];
-    return cookies.filter(cookie => 
+    return cookies.filter(cookie =>
         cookie &&
         typeof cookie === 'object' &&
         typeof cookie.name === 'string' &&
@@ -58,7 +59,7 @@ const validateCookies = (cookies) => {
 
 // Setup IPC handlers
 const setupIPC = () => {
-    if (registeredHandlers.size > 0) {
+    if (ipcInitialized) {
         electronLog.warn('IPC handlers already set up. Skipping duplicate registration.');
         return;
     }
@@ -72,6 +73,7 @@ const setupIPC = () => {
         electronLog.debug(`Registered handler: ${channel}`);
     };
 
+    // IPC Handlers
     registerHandler('cookies:fetch', async (event, url) => {
         try {
             validateUrl(url);
@@ -107,6 +109,7 @@ const setupIPC = () => {
     });
 
     electronLog.info('IPC handlers setup complete.');
+    ipcInitialized = true;
 };
 
 const cleanupIPCHandlers = () => {
@@ -163,7 +166,9 @@ const initializeApp = async () => {
     try {
         electronLog.info('Initializing app...');
         await cookieManager.initializeCluster();
+        electronLog.info('Cookie Manager cluster initialized successfully.');
         await configManager.ensureDownloadLocation();
+        electronLog.info('Download location setup complete.');
         createWindow();
     } catch (error) {
         electronLog.error('Error during app initialization:', error);
@@ -195,7 +200,9 @@ app.on('before-quit', async (event) => {
     isQuitting = true;
 
     try {
+        electronLog.info('Starting app shutdown...');
         await cookieManager.cleanup();
+        electronLog.info('App shutdown complete. Exiting...');
         app.exit(0);
     } catch (error) {
         electronLog.error('Error during shutdown:', error);

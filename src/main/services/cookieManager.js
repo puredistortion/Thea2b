@@ -41,6 +41,7 @@ class CookieManager {
                         '--no-zygote',
                         '--single-process',
                         '--disable-extensions',
+                        '--window-size=1920,1080', // Simulate a standard browser environment
                     ],
                 },
                 retryLimit: this.config.maxRetries,
@@ -84,7 +85,7 @@ class CookieManager {
             return cookies;
         } catch (error) {
             console.error(`Error fetching cookies for URL (${url}):`, error);
-            return []; // Return an empty array to avoid breaking the flow
+            throw error; // Throw the error for better diagnostics
         }
     }
 
@@ -100,6 +101,22 @@ class CookieManager {
             return filePath;
         } catch (error) {
             console.error('Error saving cookies to file:', error);
+            throw error;
+        }
+    }
+
+    loadCookiesFromFile(filePath) {
+        try {
+            if (fs.existsSync(filePath)) {
+                const cookies = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+                console.info(`Loaded cookies from file: ${filePath}`);
+                return cookies;
+            } else {
+                console.warn(`Cookie file not found: ${filePath}`);
+                return [];
+            }
+        } catch (error) {
+            console.error('Error loading cookies from file:', error);
             throw error;
         }
     }
