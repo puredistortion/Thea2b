@@ -35,7 +35,7 @@ class CookieManager {
                         '--no-sandbox',
                         '--disable-setuid-sandbox',
                         '--disable-dev-shm-usage',
-                        '--no-zygote', // Helps prevent crashes
+                        '--no-zygote', // Prevent crashes
                         '--single-process', // Reduces resource overhead
                         '--disable-extensions', // Prevents extension-related crashes
                     ],
@@ -74,7 +74,7 @@ class CookieManager {
             return cookies;
         } catch (error) {
             console.error(`Error fetching cookies for URL (${url}):`, error);
-            return []; // Return an empty array on failure to avoid breaking the flow
+            return []; // Return an empty array to avoid breaking the flow
         }
     }
 

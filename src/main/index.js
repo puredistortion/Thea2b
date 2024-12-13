@@ -1,10 +1,10 @@
-const { app, BrowserWindow, session, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const electronLog = require('electron-log');
 const configManager = require('./config-manager');
 const downloadManager = require('./download-manager');
-const cookieManager = require('./services/cookieManager'); // Ensure cookieManager is imported
+const cookieManager = require('./services/cookieManager');
 
 // Configure electron-log
 electronLog.transports.file.level = 'info';
@@ -90,7 +90,7 @@ const setupIPC = () => {
             let validatedCookies = validateCookies(cookies);
             if (!validatedCookies.length) {
                 electronLog.info('No cookies provided, attempting to fetch cookies automatically...');
-                validatedCookies = await cookieManager.fetchCookies(url); // Fetch cookies if not provided
+                validatedCookies = await cookieManager.fetchCookies(url);
                 electronLog.info('Cookies fetched automatically:', validatedCookies);
             }
 
@@ -218,7 +218,7 @@ const createWindow = () => {
 const initializeApp = async () => {
     try {
         electronLog.info('Starting app initialization...');
-        await cookieManager.initializeCluster(); // Ensure cluster is initialized
+        await cookieManager.initializeCluster();
         electronLog.info('Cookie Manager cluster initialized');
         await configManager.ensureDownloadLocation();
         electronLog.info('Download location ensured');
@@ -248,19 +248,20 @@ app.on('activate', () => {
 });
 
 app.on('before-quit', async (event) => {
-    event.preventDefault(); // Ensure cleanup completes before quitting
+    if (isQuitting) return;
+    event.preventDefault();
+    isQuitting = true;
 
     try {
-        console.info('Application is shutting down...');
-        await cookieManager.cleanup(); // Clean up Puppeteer cluster
+        console.info('Shutting down application...');
+        await cookieManager.cleanup(); // Ensure Puppeteer Cluster is cleaned up
         console.info('Cleanup complete, exiting application.');
-        app.exit(0); // Exit application cleanly
+        app.exit(0);
     } catch (error) {
-        console.error('Error during application shutdown:', error);
-        app.exit(1); // Exit with error code
+        console.error('Error during shutdown:', error);
+        app.exit(1);
     }
 });
-
 
 module.exports = { 
     createWindow,
