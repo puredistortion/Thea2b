@@ -14,11 +14,15 @@ class CookieManager {
             maxRetries: config.maxRetries || 3,
             timeout: config.timeout || 30000,
         };
-        this.cluster = null;
+        this.cluster = null; // Puppeteer Cluster instance
+        this.isClusterInitialized = false; // Guard for initialization
     }
 
     async initializeCluster() {
-        if (this.cluster) return this.cluster;
+        if (this.isClusterInitialized) {
+            console.info('Puppeteer Cluster is already initialized.');
+            return this.cluster;
+        }
 
         try {
             console.info('Initializing Puppeteer Cluster...');
@@ -28,7 +32,7 @@ class CookieManager {
                 maxConcurrency: this.config.maxConcurrency,
                 timeout: this.config.timeout,
                 puppeteerOptions: {
-                    headless: true, // Ensure headless mode is retained
+                    headless: true, // Retain headless mode for efficiency
                     args: [
                         '--disable-gpu',
                         '--no-sandbox',
@@ -60,6 +64,7 @@ class CookieManager {
             });
 
             console.info('Puppeteer Cluster initialized successfully.');
+            this.isClusterInitialized = true; // Mark initialization as complete
             return this.cluster;
         } catch (error) {
             console.error('Error initializing Puppeteer Cluster:', error);
@@ -69,7 +74,7 @@ class CookieManager {
 
     async fetchCookies(url) {
         try {
-            if (!this.cluster) {
+            if (!this.isClusterInitialized) {
                 throw new Error('Cluster is not initialized. Please initialize the cluster before fetching cookies.');
             }
 
@@ -100,7 +105,7 @@ class CookieManager {
     }
 
     async cleanup() {
-        if (!this.cluster) {
+        if (!this.isClusterInitialized) {
             console.info('Puppeteer Cluster is not initialized, skipping cleanup.');
             return;
         }
@@ -110,6 +115,7 @@ class CookieManager {
             await this.cluster.idle(); // Wait for all tasks to finish
             await this.cluster.close(); // Close the cluster
             this.cluster = null;
+            this.isClusterInitialized = false; // Reset initialization flag
             console.info('Puppeteer Cluster closed successfully.');
         } catch (error) {
             console.error('Error during Puppeteer Cluster cleanup:', error);
