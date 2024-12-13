@@ -1,5 +1,6 @@
 const { app, BrowserWindow, session, ipcMain, dialog } = require('electron');
 const path = require('path');
+const fs = require('fs');
 const electronLog = require('electron-log');
 const configManager = require('./config-manager');
 const downloadManager = require('./download-manager');
@@ -10,7 +11,7 @@ electronLog.transports.console.level = 'debug';
 
 let mainWindow;
 const registeredHandlers = new Set();
-let isQuitting = false; // Add flag to track quit state
+let isQuitting = false;
 
 // Type validation functions
 const validateUrl = (url) => {
@@ -29,7 +30,6 @@ const validateFilePath = (filePath) => {
     if (!filePath || typeof filePath !== 'string') {
         throw new Error('Invalid file path');
     }
-    // Basic path validation - you might want to add more checks
     if (filePath.includes('..')) {
         throw new Error('Invalid file path: path traversal not allowed');
     }
@@ -57,18 +57,15 @@ const validateCookies = (cookies) => {
 // Set up IPC handlers
 const setupIPC = () => {
     electronLog.info('Starting IPC setup...');
-
-    // Clean up any existing handlers
+    
     cleanupIPCHandlers();
 
-    // Register new handlers
     const registerHandler = (channel, handler) => {
         ipcMain.handle(channel, handler);
         registeredHandlers.add(channel);
         electronLog.debug(`Registered handler: ${channel}`);
     };
 
-    // Download video handler
     registerHandler('download:video', async (event, data) => {
         electronLog.info('Download:video handler called with data:', data);
         try {
@@ -104,15 +101,12 @@ const setupIPC = () => {
         }
     });
 
-    // File dialog handler
     registerHandler('dialog:openFile', async () => {
-        electronLog.info('Dialog:openFile handler called');
         try {
             const result = await dialog.showOpenDialog(mainWindow, {
                 properties: ['openFile'],
                 filters: [{ name: 'Cookie Files', extensions: ['txt', 'json'] }]
             });
-            electronLog.debug('Dialog result:', result);
             return result.canceled ? null : result.filePaths[0];
         } catch (error) {
             electronLog.error('Dialog error:', error);
@@ -120,12 +114,10 @@ const setupIPC = () => {
         }
     });
 
-    // File reading handler
     registerHandler('file:read', async (event, filePath) => {
-        electronLog.info('File:read handler called for path:', filePath);
         try {
             validateFilePath(filePath);
-            const content = await require('fs').promises.readFile(filePath, 'utf8');
+            const content = await fs.promises.readFile(filePath, 'utf8');
             return { success: true, content };
         } catch (error) {
             electronLog.error('File read error:', error);
@@ -133,13 +125,10 @@ const setupIPC = () => {
         }
     });
 
-    // Cookie fetching handler
     registerHandler('cookies:fetch', async (event, url) => {
-        electronLog.info('Cookies:fetch handler called for URL:', url);
         try {
             validateUrl(url);
             const cookies = await downloadManager.fetchCookies(url);
-            electronLog.debug('Cookies fetched:', cookies?.length || 0);
             return { success: true, cookies: cookies || [] };
         } catch (error) {
             electronLog.error('Cookie fetch error:', error);
@@ -147,9 +136,7 @@ const setupIPC = () => {
         }
     });
 
-    // Download location handlers
     registerHandler('select-download-location', async () => {
-        electronLog.info('Select-download-location handler called');
         try {
             const result = await dialog.showOpenDialog(mainWindow, {
                 properties: ['openDirectory'],
@@ -160,7 +147,6 @@ const setupIPC = () => {
             if (!result.canceled && result.filePaths[0]) {
                 const location = result.filePaths[0];
                 await configManager.setDownloadLocation(location);
-                electronLog.info('New download location set:', location);
                 return { success: true, location };
             }
             return { success: true, location: null };
@@ -187,7 +173,6 @@ const cleanupIPCHandlers = () => {
     registeredHandlers.forEach(channel => {
         try {
             ipcMain.removeHandler(channel);
-            electronLog.debug(`Removed handler: ${channel}`);
         } catch (error) {
             electronLog.warn(`Failed to remove handler ${channel}:`, error);
         }
@@ -212,16 +197,13 @@ const createWindow = () => {
         },
     });
 
-    // Set up IPC handlers before loading the file
     setupIPC();
-
     mainWindow.loadFile(path.join(__dirname, '..', '..', 'public', 'index.html'));
 
     if (process.env.NODE_ENV === 'development') {
         mainWindow.webContents.openDevTools();
     }
 
-    // Handle window close
     mainWindow.on('closed', () => {
         cleanupIPCHandlers();
         mainWindow = null;
@@ -231,26 +213,18 @@ const createWindow = () => {
 const initializeApp = async () => {
     try {
         electronLog.info('Starting app initialization...');
-        
-        // Initialize download manager first
         await downloadManager.init();
         electronLog.info('Download manager initialized');
-        
-        // Ensure download location exists
         await configManager.ensureDownloadLocation();
         electronLog.info('Download location ensured');
-        
-        // Create window (IPC setup happens inside createWindow now)
         createWindow();
         electronLog.info('Window created and IPC setup complete');
-        
     } catch (error) {
         electronLog.error('Application initialization failed:', error);
         throw error;
     }
 };
 
-// Application event handlers
 app.whenReady().then(initializeApp).catch(error => {
     electronLog.error('Failed to initialize application:', error);
     app.quit();
@@ -268,9 +242,8 @@ app.on('activate', () => {
     }
 });
 
-// Single cleanup point
 app.on('before-quit', async (event) => {
-    if (isQuitting) return; // Prevent multiple cleanup attempts
+    if (isQuitting) return;
     
     event.preventDefault();
     isQuitting = true;
@@ -279,14 +252,13 @@ app.on('before-quit', async (event) => {
         electronLog.info('Starting application cleanup...');
         await downloadManager.cleanup();
         electronLog.info('Cleanup complete, quitting application');
-        app.exit(0); // Force quit after cleanup
+        app.exit(0);
     } catch (error) {
         electronLog.error('Error during app cleanup:', error);
-        app.exit(1); // Force quit with error
+        app.exit(1);
     }
 });
 
-// Export for testing
 module.exports = { 
     createWindow,
     cleanupIPCHandlers,
