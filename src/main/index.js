@@ -10,12 +10,12 @@ const cookieManager = require('./services/cookieManager');
 electronLog.transports.file.level = 'info';
 electronLog.transports.console.level = 'debug';
 
-let mainWindow;
-let appInitialized = false; // Flag to prevent duplicate initialization
+let mainWindow = null;
+let appInitialized = false; // Prevent duplicate initialization
 const registeredHandlers = new Set();
 let isQuitting = false;
 
-// Type validation functions
+// Utility functions for validation
 const validateUrl = (url) => {
     if (!url || typeof url !== 'string') {
         throw new Error('Invalid URL format');
@@ -49,14 +49,14 @@ const validateCookies = (cookies) => {
     }
     if (!Array.isArray(cookies)) return [];
     return cookies.filter(cookie => 
-        cookie && 
-        typeof cookie === 'object' && 
-        typeof cookie.name === 'string' && 
+        cookie &&
+        typeof cookie === 'object' &&
+        typeof cookie.name === 'string' &&
         typeof cookie.value === 'string'
     );
 };
 
-// Set up IPC handlers
+// Set up IPC handlers with checks to avoid duplicates
 const setupIPC = () => {
     if (registeredHandlers.size > 0) {
         electronLog.warn('IPC handlers already set up. Skipping duplicate registration.');
@@ -72,7 +72,7 @@ const setupIPC = () => {
         electronLog.debug(`Registered handler: ${channel}`);
     };
 
-    // Register handlers
+    // IPC Handlers
     registerHandler('cookies:fetch', async (event, url) => {
         try {
             validateUrl(url);
@@ -127,6 +127,7 @@ const setupIPC = () => {
     electronLog.info('IPC handlers setup complete.');
 };
 
+// Cleanup IPC handlers on window close
 const cleanupIPCHandlers = () => {
     registeredHandlers.forEach(channel => {
         try {
@@ -138,8 +139,13 @@ const cleanupIPCHandlers = () => {
     registeredHandlers.clear();
 };
 
-// Create browser window
+// Create the browser window
 const createWindow = () => {
+    if (BrowserWindow.getAllWindows().length > 0) {
+        electronLog.warn('A window is already open. Skipping creation.');
+        return;
+    }
+
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
@@ -164,9 +170,10 @@ const createWindow = () => {
     });
 };
 
+// Initialize the application
 const initializeApp = async () => {
     if (appInitialized) {
-        electronLog.warn('App is already initialized. Skipping duplicate initialization.');
+        electronLog.warn('App is already initialized. Skipping initialization.');
         return;
     }
 
@@ -185,6 +192,7 @@ const initializeApp = async () => {
     }
 };
 
+// Electron app lifecycle events
 app.whenReady().then(initializeApp).catch((error) => {
     electronLog.error('Failed to initialize app:', error);
     app.quit();
