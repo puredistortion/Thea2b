@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const downloadManager = require('./download-manager');
 const configManager = require('./config-manager');
-const cookieManager = require('./cookieManager'); // Added import for cookieManager
+const cookieManager = require('./services/cookieManager'); // Added import for cookieManager
 
 const logger = configManager.getLogger();
 

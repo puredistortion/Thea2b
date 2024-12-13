@@ -4,7 +4,7 @@ const fs = require('fs');
 const electronLog = require('electron-log');
 const configManager = require('./config-manager');
 const downloadManager = require('./download-manager');
-const cookieManager = require('./cookieManager'); // Added cookieManager import
+const cookieManager = require('./services/cookieManager'); // Added cookieManager import
 
 // Configure electron-log
 electronLog.transports.file.level = 'info';
