@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const downloadManager = require('./download-manager');
 const configManager = require('./config-manager');
+const cookieManager = require('./cookieManager'); // Added import for cookieManager
 
 const logger = configManager.getLogger();
 
@@ -14,7 +15,7 @@ async function setupIPC() {
         ipcMain.handle('cookies:fetch', async (event, url) => {
             try {
                 logger.info('Fetching cookies for URL:', url);
-                const cookies = await downloadManager.fetchCookies(url);
+                const cookies = await cookieManager.fetchCookies(url); // Updated to use cookieManager
                 return cookies || [];
             } catch (error) {
                 logger.error('Cookie fetch failed:', error);

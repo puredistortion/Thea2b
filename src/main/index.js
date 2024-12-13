@@ -4,6 +4,7 @@ const fs = require('fs');
 const electronLog = require('electron-log');
 const configManager = require('./config-manager');
 const downloadManager = require('./download-manager');
+const cookieManager = require('./cookieManager'); // Added cookieManager import
 
 // Configure electron-log
 electronLog.transports.file.level = 'info';
@@ -66,6 +67,19 @@ const setupIPC = () => {
         electronLog.debug(`Registered handler: ${channel}`);
     };
 
+    registerHandler('cookies:fetch', async (event, url) => {
+        try {
+            validateUrl(url);
+            electronLog.info('Fetching cookies for URL:', url);
+            const cookies = await cookieManager.fetchCookies(url); // Use cookieManager for fetching cookies
+            electronLog.info('Fetched cookies:', cookies);
+            return { success: true, cookies };
+        } catch (error) {
+            electronLog.error('Cookie fetch error:', error);
+            return { success: false, error: error.message, cookies: [] };
+        }
+    });
+
     registerHandler('download:video', async (event, data) => {
         electronLog.info('Download:video handler called with data:', data);
         try {
@@ -73,16 +87,11 @@ const setupIPC = () => {
             validateUrl(url);
             const validatedCookies = validateCookies(cookies);
             const outputDir = configManager.getDownloadLocation();
-            
-            electronLog.info('Starting download with:', { 
-                url, 
-                cookiesLength: validatedCookies.length,
-                outputDir 
-            });
 
+            electronLog.info('Starting download with:', { url, cookiesLength: validatedCookies.length, outputDir });
             const result = await downloadManager.startDownload(
-                url, 
-                validatedCookies, 
+                url,
+                validatedCookies,
                 outputDir,
                 (progress) => {
                     try {
@@ -92,7 +101,6 @@ const setupIPC = () => {
                     }
                 }
             );
-            
             electronLog.info('Download completed:', result);
             return { success: true, message: 'Download completed successfully' };
         } catch (error) {
@@ -122,17 +130,6 @@ const setupIPC = () => {
         } catch (error) {
             electronLog.error('File read error:', error);
             return { success: false, error: error.message };
-        }
-    });
-
-    registerHandler('cookies:fetch', async (event, url) => {
-        try {
-            validateUrl(url);
-            const cookies = await downloadManager.fetchCookies(url);
-            return { success: true, cookies: cookies || [] };
-        } catch (error) {
-            electronLog.error('Cookie fetch error:', error);
-            return { success: false, error: error.message, cookies: [] };
         }
     });
 
@@ -188,12 +185,7 @@ const createWindow = () => {
         minHeight: 400,
         webPreferences: {
             contextIsolation: true,
-            nodeIntegration: false,
             preload: path.join(__dirname, '..', 'preload', 'index.js'),
-            sandbox: false,
-            webSecurity: true,
-            allowRunningInsecureContent: false,
-            enableRemoteModule: false,
         },
     });
 
@@ -213,8 +205,8 @@ const createWindow = () => {
 const initializeApp = async () => {
     try {
         electronLog.info('Starting app initialization...');
-        await downloadManager.init();
-        electronLog.info('Download manager initialized');
+        await cookieManager.initializeCluster(); // Ensure cluster is initialized
+        electronLog.info('Cookie Manager cluster initialized');
         await configManager.ensureDownloadLocation();
         electronLog.info('Download location ensured');
         createWindow();
@@ -250,7 +242,7 @@ app.on('before-quit', async (event) => {
     
     try {
         electronLog.info('Starting application cleanup...');
-        await downloadManager.cleanup();
+        await cookieManager.cleanup(); // Clean up cluster resources
         electronLog.info('Cleanup complete, quitting application');
         app.exit(0);
     } catch (error) {
