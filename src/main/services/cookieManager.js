@@ -35,6 +35,9 @@ class CookieManager {
                         '--no-sandbox',
                         '--disable-setuid-sandbox',
                         '--disable-dev-shm-usage',
+                        '--no-zygote', // Helps prevent crashes
+                        '--single-process', // Reduces resource overhead
+                        '--disable-extensions', // Prevents extension-related crashes
                     ],
                 },
                 retryLimit: this.config.maxRetries,
@@ -42,11 +45,18 @@ class CookieManager {
 
             // Define a task for fetching cookies
             this.cluster.task(async ({ page, data: { url } }) => {
-                console.info(`Navigating to URL: ${url}`);
-                await page.goto(url, { waitUntil: 'networkidle2' });
-                const cookies = await page.cookies();
-                console.info(`Cookies fetched for URL: ${url}`);
-                return cookies;
+                try {
+                    console.info(`Navigating to URL: ${url}`);
+                    await page.goto(url, { waitUntil: 'networkidle2' });
+                    const cookies = await page.cookies();
+                    console.info(`Cookies fetched successfully for URL: ${url}`);
+                    return cookies;
+                } catch (error) {
+                    console.error(`Error during cookie fetch for URL (${url}):`, error);
+
+                    // Add a fallback or re-throw the error to the retry mechanism
+                    throw new Error(`Failed to fetch cookies for ${url}: ${error.message}`);
+                }
             });
 
             console.info('Puppeteer Cluster initialized successfully.');
@@ -66,7 +76,7 @@ class CookieManager {
             return cookies;
         } catch (error) {
             console.error(`Error fetching cookies for URL (${url}):`, error);
-            throw error;
+            return []; // Return an empty array on failure to avoid breaking the flow
         }
     }
 
