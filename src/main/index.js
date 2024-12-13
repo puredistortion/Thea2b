@@ -57,8 +57,7 @@ const validateCookies = (cookies) => {
 
 // Set up IPC handlers
 const setupIPC = () => {
-    electronLog.info('Starting IPC setup...');
-    
+    electronLog.info('Setting up IPC handlers...');
     cleanupIPCHandlers();
 
     const registerHandler = (channel, handler) => {
@@ -67,39 +66,37 @@ const setupIPC = () => {
         electronLog.debug(`Registered handler: ${channel}`);
     };
 
+    // Cookie fetching handler
     registerHandler('cookies:fetch', async (event, url) => {
         try {
             validateUrl(url);
             electronLog.info('Fetching cookies for URL:', url);
             const cookies = await cookieManager.fetchCookies(url);
-            electronLog.info('Fetched cookies:', cookies);
+            electronLog.info('Fetched cookies successfully:', cookies);
             return { success: true, cookies };
         } catch (error) {
-            electronLog.error('Cookie fetch error:', error);
+            electronLog.error('Error fetching cookies:', error);
             return { success: false, error: error.message, cookies: [] };
         }
     });
 
+    // Download video handler
     registerHandler('download:video', async (event, data) => {
         const { url, cookies } = data;
-        electronLog.info('Download:video handler called with data:', { url, cookies });
+        electronLog.info('Download request received for URL:', url);
 
         try {
             validateUrl(url);
-
             let validatedCookies = validateCookies(cookies);
+
             if (!validatedCookies.length) {
-                electronLog.info('No cookies provided, attempting to fetch cookies automatically...');
+                electronLog.info('No cookies provided, attempting automatic fetch...');
                 validatedCookies = await cookieManager.fetchCookies(url);
-                electronLog.info('Cookies fetched automatically:', validatedCookies);
+                electronLog.info('Fetched cookies automatically:', validatedCookies);
             }
 
             const outputDir = configManager.getDownloadLocation();
-            electronLog.info('Starting download with:', { 
-                url, 
-                cookiesLength: validatedCookies.length, 
-                outputDir 
-            });
+            electronLog.info('Initiating download with:', { url, cookies: validatedCookies.length, outputDir });
 
             const result = await downloadManager.startDownload(
                 url,
@@ -109,19 +106,20 @@ const setupIPC = () => {
                     try {
                         event.sender.send('download:progress', progress);
                     } catch (err) {
-                        electronLog.error('Progress update error:', err);
+                        electronLog.error('Error sending download progress:', err);
                     }
                 }
             );
 
-            electronLog.info('Download completed:', result);
-            return { success: true, message: 'Download completed successfully' };
+            electronLog.info('Download completed successfully:', result);
+            return { success: true, message: 'Download completed successfully.' };
         } catch (error) {
-            electronLog.error('Download error:', error);
+            electronLog.error('Error during download:', error);
             return { success: false, error: error.message };
         }
     });
 
+    // Other handlers (dialog, file operations)
     registerHandler('dialog:openFile', async () => {
         try {
             const result = await dialog.showOpenDialog(mainWindow, {
@@ -130,38 +128,7 @@ const setupIPC = () => {
             });
             return result.canceled ? null : result.filePaths[0];
         } catch (error) {
-            electronLog.error('Dialog error:', error);
-            return { success: false, error: error.message };
-        }
-    });
-
-    registerHandler('file:read', async (event, filePath) => {
-        try {
-            validateFilePath(filePath);
-            const content = await fs.promises.readFile(filePath, 'utf8');
-            return { success: true, content };
-        } catch (error) {
-            electronLog.error('File read error:', error);
-            return { success: false, error: error.message };
-        }
-    });
-
-    registerHandler('select-download-location', async () => {
-        try {
-            const result = await dialog.showOpenDialog(mainWindow, {
-                properties: ['openDirectory'],
-                title: 'Select Download Location',
-                defaultPath: configManager.getDownloadLocation()
-            });
-            
-            if (!result.canceled && result.filePaths[0]) {
-                const location = result.filePaths[0];
-                await configManager.setDownloadLocation(location);
-                return { success: true, location };
-            }
-            return { success: true, location: null };
-        } catch (error) {
-            electronLog.error('Location selection error:', error);
+            electronLog.error('Error in open file dialog:', error);
             return { success: false, error: error.message };
         }
     });
@@ -171,12 +138,12 @@ const setupIPC = () => {
             const location = configManager.getDownloadLocation();
             return { success: true, location };
         } catch (error) {
-            electronLog.error('Get download location error:', error);
+            electronLog.error('Error getting download location:', error);
             return { success: false, error: error.message };
         }
     });
 
-    electronLog.info('Registered IPC handlers:', Array.from(registeredHandlers));
+    electronLog.info('IPC handlers setup complete.');
 };
 
 const cleanupIPCHandlers = () => {
@@ -184,12 +151,13 @@ const cleanupIPCHandlers = () => {
         try {
             ipcMain.removeHandler(channel);
         } catch (error) {
-            electronLog.warn(`Failed to remove handler ${channel}:`, error);
+            electronLog.warn(`Failed to remove IPC handler for ${channel}:`, error);
         }
     });
     registeredHandlers.clear();
 };
 
+// Create browser window
 const createWindow = () => {
     mainWindow = new BrowserWindow({
         width: 800,
@@ -217,21 +185,21 @@ const createWindow = () => {
 
 const initializeApp = async () => {
     try {
-        electronLog.info('Starting app initialization...');
+        electronLog.info('Initializing app...');
         await cookieManager.initializeCluster();
-        electronLog.info('Cookie Manager cluster initialized');
+        electronLog.info('Cookie Manager cluster initialized successfully.');
         await configManager.ensureDownloadLocation();
-        electronLog.info('Download location ensured');
+        electronLog.info('Download location setup complete.');
         createWindow();
-        electronLog.info('Window created and IPC setup complete');
     } catch (error) {
-        electronLog.error('Application initialization failed:', error);
-        throw error;
+        electronLog.error('Error during app initialization:', error);
+        app.quit();
     }
 };
 
-app.whenReady().then(initializeApp).catch(error => {
-    electronLog.error('Failed to initialize application:', error);
+// Application lifecycle handlers
+app.whenReady().then(initializeApp).catch((error) => {
+    electronLog.error('Failed to initialize app:', error);
     app.quit();
 });
 
@@ -253,20 +221,20 @@ app.on('before-quit', async (event) => {
     isQuitting = true;
 
     try {
-        console.info('Shutting down application...');
-        await cookieManager.cleanup(); // Ensure Puppeteer Cluster is cleaned up
-        console.info('Cleanup complete, exiting application.');
+        electronLog.info('Starting app shutdown...');
+        await cookieManager.cleanup();
+        electronLog.info('App shutdown complete. Exiting...');
         app.exit(0);
     } catch (error) {
-        console.error('Error during shutdown:', error);
+        electronLog.error('Error during app shutdown:', error);
         app.exit(1);
     }
 });
 
-module.exports = { 
+module.exports = {
     createWindow,
     cleanupIPCHandlers,
     validateUrl,
     validateFilePath,
-    validateCookies
+    validateCookies,
 };

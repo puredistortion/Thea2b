@@ -1,119 +1,240 @@
-const { spawn } = require('child_process');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
-const fs = require('fs-extra');
+const fs = require('fs');
 const electronLog = require('electron-log');
 const configManager = require('./config-manager');
-const { fetchCookies } = require('./services/cookieManager');
-const readline = require('readline');
+const downloadManager = require('./download-manager');
+const cookieManager = require('./services/cookieManager');
 
-class DownloadManager {
-    constructor() {
-        this.downloads = new Map();
+// Configure electron-log
+electronLog.transports.file.level = 'info';
+electronLog.transports.console.level = 'debug';
+
+let mainWindow;
+const registeredHandlers = new Set();
+let isQuitting = false;
+
+// Type validation functions
+const validateUrl = (url) => {
+    if (!url || typeof url !== 'string') {
+        throw new Error('Invalid URL format');
     }
+    try {
+        new URL(url);
+        return true;
+    } catch (e) {
+        throw new Error('Invalid URL format');
+    }
+};
 
-    async init() {
-        try {
-            electronLog.info('Initializing DownloadManager...');
-            await configManager.init();
-            electronLog.info('DownloadManager initialized successfully');
-        } catch (error) {
-            electronLog.error('Failed to initialize DownloadManager:', error);
-            throw error;
+const validateFilePath = (filePath) => {
+    if (!filePath || typeof filePath !== 'string') {
+        throw new Error('Invalid file path');
+    }
+    if (filePath.includes('..')) {
+        throw new Error('Invalid file path: path traversal not allowed');
+    }
+    return true;
+};
+
+const validateCookies = (cookies) => {
+    if (!cookies) return [];
+    try {
+        if (typeof cookies === 'string') {
+            cookies = JSON.parse(cookies);
         }
+    } catch (e) {
+        return [];
     }
+    if (!Array.isArray(cookies)) return [];
+    return cookies.filter(cookie => 
+        cookie && 
+        typeof cookie === 'object' && 
+        typeof cookie.name === 'string' && 
+        typeof cookie.value === 'string'
+    );
+};
 
-    async fetchCookies(url) {
+// Set up IPC handlers
+const setupIPC = () => {
+    electronLog.info('Setting up IPC handlers...');
+    cleanupIPCHandlers();
+
+    const registerHandler = (channel, handler) => {
+        ipcMain.handle(channel, handler);
+        registeredHandlers.add(channel);
+        electronLog.debug(`Registered handler: ${channel}`);
+    };
+
+    // Cookie fetching handler
+    registerHandler('cookies:fetch', async (event, url) => {
         try {
+            validateUrl(url);
             electronLog.info('Fetching cookies for URL:', url);
-            const cookies = await fetchCookies(url);
-            electronLog.info(`Fetched ${cookies.length} cookies for URL: ${url}`);
-            return cookies;
+            const cookies = await cookieManager.fetchCookies(url);
+            electronLog.info('Fetched cookies successfully:', cookies);
+            return { success: true, cookies };
         } catch (error) {
-            electronLog.error(`Error fetching cookies for URL (${url}):`, error);
-            throw error;
+            electronLog.error('Error fetching cookies:', error);
+            return { success: false, error: error.message, cookies: [] };
         }
-    }
+    });
 
-    async startDownload(url, cookies = [], outputDir, progressCallback) {
-        electronLog.info('Starting download for URL:', url);
+    // Download video handler
+    registerHandler('download:video', async (event, data) => {
+        const { url, cookies } = data;
+        electronLog.info('Download request received for URL:', url);
 
         try {
-            // Ensure output directory exists
-            await fs.ensureDir(outputDir);
+            validateUrl(url);
+            let validatedCookies = validateCookies(cookies);
 
-            // Prepare yt-dlp arguments
-            const args = [
-                url,
-                '--format', 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]',
-                '--merge-output-format', 'mp4',
-                '-o', path.join(outputDir, '%(title)s.%(ext)s'),
-                '--no-warnings',
-                '--progress', '--newline',
-                '--no-playlist',
-                '--console-title'
-            ];
-
-            // Handle cookies
-            if (cookies.length > 0) {
-                const cookieFile = path.join(outputDir, 'cookies.txt');
-                const cookieContent = cookies.map(cookie =>
-                    `${cookie.domain}\tTRUE\t${cookie.path}\t${
-                        cookie.secure ? 'TRUE' : 'FALSE'
-                    }\t${cookie.expires || 0}\t${cookie.name}\t${cookie.value}`
-                ).join('\n');
-
-                await fs.writeFile(cookieFile, cookieContent);
-                args.push('--cookies', cookieFile);
-                electronLog.info(`Cookies saved to ${cookieFile}`);
-            } else {
-                electronLog.warn('No cookies provided for this download.');
+            if (!validatedCookies.length) {
+                electronLog.info('No cookies provided, attempting automatic fetch...');
+                validatedCookies = await cookieManager.fetchCookies(url);
+                electronLog.info('Fetched cookies automatically:', validatedCookies);
             }
 
-            // Spawn yt-dlp process
-            electronLog.info('Spawning yt-dlp with args:', args);
-            const downloadProcess = spawn('yt-dlp', args);
+            const outputDir = configManager.getDownloadLocation();
+            electronLog.info('Initiating download with:', { url, cookies: validatedCookies.length, outputDir });
 
-            downloadProcess.stdout.on('data', (data) => {
-                const output = data.toString();
-                readline.clearLine(process.stdout, 0);
-                readline.cursorTo(process.stdout, 0);
-                process.stdout.write(output.replace(/\n/g, ''));
-
-                // Parse progress percentage
-                const progressMatch = output.match(/(\d+\.?\d*)%/);
-                if (progressMatch && progressCallback) {
-                    const progress = parseFloat(progressMatch[1]);
-                    progressCallback({ progress, status: 'downloading' });
-                }
-            });
-
-            downloadProcess.stderr.on('data', (data) => {
-                electronLog.error('Download process error:', data.toString());
-            });
-
-            // Wait for the process to complete
-            return new Promise((resolve, reject) => {
-                downloadProcess.on('close', (code) => {
-                    readline.clearLine(process.stdout, 0);
-                    readline.cursorTo(process.stdout, 0);
-
-                    if (code === 0) {
-                        resolve('Video Downloaded and Processed');
-                    } else {
-                        reject(new Error(`Download failed with code ${code}`));
+            const result = await downloadManager.startDownload(
+                url,
+                validatedCookies,
+                outputDir,
+                (progress) => {
+                    try {
+                        event.sender.send('download:progress', progress);
+                    } catch (err) {
+                        electronLog.error('Error sending download progress:', err);
                     }
-                });
-            });
+                }
+            );
+
+            electronLog.info('Download completed successfully:', result);
+            return { success: true, message: 'Download completed successfully.' };
         } catch (error) {
-            electronLog.error('Download failed:', error);
-            throw error;
+            electronLog.error('Error during download:', error);
+            return { success: false, error: error.message };
         }
+    });
+
+    // Other handlers (dialog, file operations)
+    registerHandler('dialog:openFile', async () => {
+        try {
+            const result = await dialog.showOpenDialog(mainWindow, {
+                properties: ['openFile'],
+                filters: [{ name: 'Cookie Files', extensions: ['txt', 'json'] }]
+            });
+            return result.canceled ? null : result.filePaths[0];
+        } catch (error) {
+            electronLog.error('Error in open file dialog:', error);
+            return { success: false, error: error.message };
+        }
+    });
+
+    registerHandler('get-download-location', async () => {
+        try {
+            const location = configManager.getDownloadLocation();
+            return { success: true, location };
+        } catch (error) {
+            electronLog.error('Error getting download location:', error);
+            return { success: false, error: error.message };
+        }
+    });
+
+    electronLog.info('IPC handlers setup complete.');
+};
+
+const cleanupIPCHandlers = () => {
+    registeredHandlers.forEach(channel => {
+        try {
+            ipcMain.removeHandler(channel);
+        } catch (error) {
+            electronLog.warn(`Failed to remove IPC handler for ${channel}:`, error);
+        }
+    });
+    registeredHandlers.clear();
+};
+
+// Create browser window
+const createWindow = () => {
+    mainWindow = new BrowserWindow({
+        width: 800,
+        height: 600,
+        minWidth: 600,
+        minHeight: 400,
+        webPreferences: {
+            contextIsolation: true,
+            preload: path.join(__dirname, '..', 'preload', 'index.js'),
+        },
+    });
+
+    setupIPC();
+    mainWindow.loadFile(path.join(__dirname, '..', '..', 'public', 'index.html'));
+
+    if (process.env.NODE_ENV === 'development') {
+        mainWindow.webContents.openDevTools();
     }
 
-    async cleanup() {
-        // No persistent resources to clean in this approach
-    }
-}
+    mainWindow.on('closed', () => {
+        cleanupIPCHandlers();
+        mainWindow = null;
+    });
+};
 
-const downloadManager = new DownloadManager();
-module.exports = downloadManager;
+const initializeApp = async () => {
+    try {
+        electronLog.info('Initializing app...');
+        await cookieManager.initializeCluster();
+        electronLog.info('Cookie Manager cluster initialized successfully.');
+        await configManager.ensureDownloadLocation();
+        electronLog.info('Download location setup complete.');
+        createWindow();
+    } catch (error) {
+        electronLog.error('Error during app initialization:', error);
+        app.quit();
+    }
+};
+
+// Application lifecycle handlers
+app.whenReady().then(initializeApp).catch((error) => {
+    electronLog.error('Failed to initialize app:', error);
+    app.quit();
+});
+
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
+});
+
+app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow();
+    }
+});
+
+app.on('before-quit', async (event) => {
+    if (isQuitting) return;
+    event.preventDefault();
+    isQuitting = true;
+
+    try {
+        electronLog.info('Starting app shutdown...');
+        await cookieManager.cleanup();
+        electronLog.info('App shutdown complete. Exiting...');
+        app.exit(0);
+    } catch (error) {
+        electronLog.error('Error during app shutdown:', error);
+        app.exit(1);
+    }
+});
+
+module.exports = {
+    createWindow,
+    cleanupIPCHandlers,
+    validateUrl,
+    validateFilePath,
+    validateCookies,
+};

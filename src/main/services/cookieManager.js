@@ -18,7 +18,7 @@ class CookieManager {
     }
 
     async initializeCluster() {
-        if (this.cluster) return this.cluster; // Return existing cluster if already initialized
+        if (this.cluster) return this.cluster;
 
         try {
             console.info('Initializing Puppeteer Cluster...');
@@ -28,16 +28,15 @@ class CookieManager {
                 maxConcurrency: this.config.maxConcurrency,
                 timeout: this.config.timeout,
                 puppeteerOptions: {
-                    headless: true,
+                    headless: true, // Ensure headless mode is retained
                     args: [
                         '--disable-gpu',
-                        '--disable-software-rasterizer',
                         '--no-sandbox',
                         '--disable-setuid-sandbox',
                         '--disable-dev-shm-usage',
-                        '--no-zygote', // Prevent crashes
-                        '--single-process', // Reduces resource overhead
-                        '--disable-extensions', // Prevents extension-related crashes
+                        '--no-zygote',
+                        '--single-process',
+                        '--disable-extensions',
                     ],
                 },
                 retryLimit: this.config.maxRetries,
@@ -47,6 +46,9 @@ class CookieManager {
             this.cluster.task(async ({ page, data: { url } }) => {
                 try {
                     console.info(`Navigating to URL: ${url}`);
+                    await page.setUserAgent(
+                        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+                    );
                     await page.goto(url, { waitUntil: 'networkidle2' });
                     const cookies = await page.cookies();
                     console.info(`Cookies fetched successfully for URL: ${url}`);
@@ -67,9 +69,12 @@ class CookieManager {
 
     async fetchCookies(url) {
         try {
-            const cluster = await this.initializeCluster();
+            if (!this.cluster) {
+                throw new Error('Cluster is not initialized. Please initialize the cluster before fetching cookies.');
+            }
+
             console.info(`Fetching cookies for URL: ${url}`);
-            const cookies = await cluster.execute({ url });
+            const cookies = await this.cluster.execute({ url });
             console.info(`Fetched ${cookies.length} cookies for URL: ${url}`);
             return cookies;
         } catch (error) {
