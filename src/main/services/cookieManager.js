@@ -20,59 +20,84 @@ class CookieManager {
     async initializeCluster() {
         if (this.cluster) return this.cluster; // Return existing cluster if already initialized
 
-        this.cluster = await Cluster.launch({
-            puppeteer,
-            concurrency: Cluster.CONCURRENCY_CONTEXT,
-            maxConcurrency: this.config.maxConcurrency,
-            timeout: this.config.timeout,
-            puppeteerOptions: {
-                headless: true,
-                args: [
-                    '--disable-gpu',
-                    '--disable-software-rasterizer',
-                    '--no-sandbox',
-                    '--disable-setuid-sandbox',
-                    '--disable-dev-shm-usage',
-                ],
-            },
-            retryLimit: this.config.maxRetries,
-        });
+        try {
+            console.info('Initializing Puppeteer Cluster...');
+            this.cluster = await Cluster.launch({
+                puppeteer,
+                concurrency: Cluster.CONCURRENCY_CONTEXT,
+                maxConcurrency: this.config.maxConcurrency,
+                timeout: this.config.timeout,
+                puppeteerOptions: {
+                    headless: true,
+                    args: [
+                        '--disable-gpu',
+                        '--disable-software-rasterizer',
+                        '--no-sandbox',
+                        '--disable-setuid-sandbox',
+                        '--disable-dev-shm-usage',
+                    ],
+                },
+                retryLimit: this.config.maxRetries,
+            });
 
-        // Define a task for fetching cookies
-        this.cluster.task(async ({ page, data: { url } }) => {
-            await page.goto(url, { waitUntil: 'networkidle2' });
-            return await page.cookies();
-        });
+            // Define a task for fetching cookies
+            this.cluster.task(async ({ page, data: { url } }) => {
+                console.info(`Navigating to URL: ${url}`);
+                await page.goto(url, { waitUntil: 'networkidle2' });
+                const cookies = await page.cookies();
+                console.info(`Cookies fetched for URL: ${url}`);
+                return cookies;
+            });
 
-        return this.cluster;
+            console.info('Puppeteer Cluster initialized successfully.');
+            return this.cluster;
+        } catch (error) {
+            console.error('Error initializing Puppeteer Cluster:', error);
+            throw error;
+        }
     }
 
     async fetchCookies(url) {
         try {
             const cluster = await this.initializeCluster();
+            console.info(`Fetching cookies for URL: ${url}`);
             const cookies = await cluster.execute({ url });
+            console.info(`Fetched ${cookies.length} cookies for URL: ${url}`);
             return cookies;
         } catch (error) {
-            console.error('Error fetching cookies:', error);
+            console.error(`Error fetching cookies for URL (${url}):`, error);
             throw error;
         }
     }
 
     saveCookiesToFile(cookies, outputDir = 'cookies') {
-        if (!fs.existsSync(outputDir)) {
-            fs.mkdirSync(outputDir, { recursive: true });
-        }
+        try {
+            if (!fs.existsSync(outputDir)) {
+                fs.mkdirSync(outputDir, { recursive: true });
+            }
 
-        const filePath = path.join(outputDir, `cookies_${Date.now()}.json`);
-        fs.writeFileSync(filePath, JSON.stringify(cookies, null, 2));
-        return filePath;
+            const filePath = path.join(outputDir, `cookies_${Date.now()}.json`);
+            fs.writeFileSync(filePath, JSON.stringify(cookies, null, 2));
+            console.info(`Cookies saved to file: ${filePath}`);
+            return filePath;
+        } catch (error) {
+            console.error('Error saving cookies to file:', error);
+            throw error;
+        }
     }
 
     async cleanup() {
         if (this.cluster) {
-            await this.cluster.idle();
-            await this.cluster.close();
-            this.cluster = null;
+            try {
+                console.info('Closing Puppeteer Cluster...');
+                await this.cluster.idle();
+                await this.cluster.close();
+                this.cluster = null;
+                console.info('Puppeteer Cluster closed successfully.');
+            } catch (error) {
+                console.error('Error closing Puppeteer Cluster:', error);
+                throw error;
+            }
         }
     }
 }

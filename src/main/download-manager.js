@@ -23,13 +23,25 @@ class DownloadManager {
     }
 
     async fetchCookies(url) {
-        return fetchCookies(url);
+        try {
+            electronLog.info('Fetching cookies for URL:', url);
+            const cookies = await fetchCookies(url);
+            electronLog.info(`Fetched ${cookies.length} cookies for URL: ${url}`);
+            return cookies;
+        } catch (error) {
+            electronLog.error(`Error fetching cookies for URL (${url}):`, error);
+            throw error;
+        }
     }
 
     async startDownload(url, cookies = [], outputDir, progressCallback) {
         electronLog.info('Starting download for URL:', url);
-        
+
         try {
+            // Ensure output directory exists
+            await fs.ensureDir(outputDir);
+
+            // Prepare yt-dlp arguments
             const args = [
                 url,
                 '--format', 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]',
@@ -41,9 +53,10 @@ class DownloadManager {
                 '--console-title'
             ];
 
-            if (cookies && cookies.length > 0) {
+            // Handle cookies
+            if (cookies.length > 0) {
                 const cookieFile = path.join(outputDir, 'cookies.txt');
-                const cookieContent = cookies.map(cookie => 
+                const cookieContent = cookies.map(cookie =>
                     `${cookie.domain}\tTRUE\t${cookie.path}\t${
                         cookie.secure ? 'TRUE' : 'FALSE'
                     }\t${cookie.expires || 0}\t${cookie.name}\t${cookie.value}`
@@ -51,24 +64,26 @@ class DownloadManager {
 
                 await fs.writeFile(cookieFile, cookieContent);
                 args.push('--cookies', cookieFile);
+                electronLog.info(`Cookies saved to ${cookieFile}`);
+            } else {
+                electronLog.warn('No cookies provided for this download.');
             }
 
+            // Spawn yt-dlp process
             electronLog.info('Spawning yt-dlp with args:', args);
             const downloadProcess = spawn('yt-dlp', args);
 
-            process.stdout.write('\r');
             downloadProcess.stdout.on('data', (data) => {
+                const output = data.toString();
                 readline.clearLine(process.stdout, 0);
                 readline.cursorTo(process.stdout, 0);
-                process.stdout.write('\r' + data.toString().replace(/\n/g, ''));
+                process.stdout.write(output.replace(/\n/g, ''));
 
-                const progressMatch = data.toString().match(/(\d+\.?\d*)%/);
+                // Parse progress percentage
+                const progressMatch = output.match(/(\d+\.?\d*)%/);
                 if (progressMatch && progressCallback) {
                     const progress = parseFloat(progressMatch[1]);
-                    progressCallback({
-                        progress,
-                        status: 'downloading'
-                    });
+                    progressCallback({ progress, status: 'downloading' });
                 }
             });
 
@@ -76,11 +91,12 @@ class DownloadManager {
                 electronLog.error('Download process error:', data.toString());
             });
 
+            // Wait for the process to complete
             return new Promise((resolve, reject) => {
                 downloadProcess.on('close', (code) => {
                     readline.clearLine(process.stdout, 0);
                     readline.cursorTo(process.stdout, 0);
-                    
+
                     if (code === 0) {
                         resolve('Video Downloaded and Processed');
                     } else {
@@ -95,7 +111,7 @@ class DownloadManager {
     }
 
     async cleanup() {
-        // Nothing to clean up in stateless approach
+        // No persistent resources to clean in this approach
     }
 }
 

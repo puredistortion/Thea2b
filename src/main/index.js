@@ -4,7 +4,7 @@ const fs = require('fs');
 const electronLog = require('electron-log');
 const configManager = require('./config-manager');
 const downloadManager = require('./download-manager');
-const cookieManager = require('./services/cookieManager'); // Added cookieManager import
+const cookieManager = require('./services/cookieManager'); // Ensure cookieManager is imported
 
 // Configure electron-log
 electronLog.transports.file.level = 'info';
@@ -71,7 +71,7 @@ const setupIPC = () => {
         try {
             validateUrl(url);
             electronLog.info('Fetching cookies for URL:', url);
-            const cookies = await cookieManager.fetchCookies(url); // Use cookieManager for fetching cookies
+            const cookies = await cookieManager.fetchCookies(url);
             electronLog.info('Fetched cookies:', cookies);
             return { success: true, cookies };
         } catch (error) {
@@ -81,14 +81,26 @@ const setupIPC = () => {
     });
 
     registerHandler('download:video', async (event, data) => {
-        electronLog.info('Download:video handler called with data:', data);
-        try {
-            const { url, cookies } = data;
-            validateUrl(url);
-            const validatedCookies = validateCookies(cookies);
-            const outputDir = configManager.getDownloadLocation();
+        const { url, cookies } = data;
+        electronLog.info('Download:video handler called with data:', { url, cookies });
 
-            electronLog.info('Starting download with:', { url, cookiesLength: validatedCookies.length, outputDir });
+        try {
+            validateUrl(url);
+
+            let validatedCookies = validateCookies(cookies);
+            if (!validatedCookies.length) {
+                electronLog.info('No cookies provided, attempting to fetch cookies automatically...');
+                validatedCookies = await cookieManager.fetchCookies(url); // Fetch cookies if not provided
+                electronLog.info('Cookies fetched automatically:', validatedCookies);
+            }
+
+            const outputDir = configManager.getDownloadLocation();
+            electronLog.info('Starting download with:', { 
+                url, 
+                cookiesLength: validatedCookies.length, 
+                outputDir 
+            });
+
             const result = await downloadManager.startDownload(
                 url,
                 validatedCookies,
@@ -101,6 +113,7 @@ const setupIPC = () => {
                     }
                 }
             );
+
             electronLog.info('Download completed:', result);
             return { success: true, message: 'Download completed successfully' };
         } catch (error) {
