@@ -53,8 +53,6 @@ class CookieManager {
                     return cookies;
                 } catch (error) {
                     console.error(`Error during cookie fetch for URL (${url}):`, error);
-
-                    // Add a fallback or re-throw the error to the retry mechanism
                     throw new Error(`Failed to fetch cookies for ${url}: ${error.message}`);
                 }
             });
@@ -97,17 +95,19 @@ class CookieManager {
     }
 
     async cleanup() {
-        if (this.cluster) {
-            try {
-                console.info('Closing Puppeteer Cluster...');
-                await this.cluster.idle();
-                await this.cluster.close();
-                this.cluster = null;
-                console.info('Puppeteer Cluster closed successfully.');
-            } catch (error) {
-                console.error('Error closing Puppeteer Cluster:', error);
-                throw error;
-            }
+        if (!this.cluster) {
+            console.info('Puppeteer Cluster is not initialized, skipping cleanup.');
+            return;
+        }
+
+        try {
+            console.info('Closing Puppeteer Cluster...');
+            await this.cluster.idle(); // Wait for all tasks to finish
+            await this.cluster.close(); // Close the cluster
+            this.cluster = null;
+            console.info('Puppeteer Cluster closed successfully.');
+        } catch (error) {
+            console.error('Error during Puppeteer Cluster cleanup:', error);
         }
     }
 }

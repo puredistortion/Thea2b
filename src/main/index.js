@@ -248,21 +248,19 @@ app.on('activate', () => {
 });
 
 app.on('before-quit', async (event) => {
-    if (isQuitting) return;
-    
-    event.preventDefault();
-    isQuitting = true;
-    
+    event.preventDefault(); // Ensure cleanup completes before quitting
+
     try {
-        electronLog.info('Starting application cleanup...');
-        await cookieManager.cleanup(); // Clean up cluster resources
-        electronLog.info('Cleanup complete, quitting application');
-        app.exit(0);
+        console.info('Application is shutting down...');
+        await cookieManager.cleanup(); // Clean up Puppeteer cluster
+        console.info('Cleanup complete, exiting application.');
+        app.exit(0); // Exit application cleanly
     } catch (error) {
-        electronLog.error('Error during app cleanup:', error);
-        app.exit(1);
+        console.error('Error during application shutdown:', error);
+        app.exit(1); // Exit with error code
     }
 });
+
 
 module.exports = { 
     createWindow,
