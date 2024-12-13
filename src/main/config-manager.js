@@ -304,7 +304,7 @@ class ConfigManager {
             }
 
             if (!existsSync(normalizedPath)) {
-                await mkdirSync(normalizedPath, { recursive: true, mode: 0o700 });
+                await mkdirSync(normalizedPath, { recursive: true, mode: 0o755 });
             }
 
             await accessSync(normalizedPath, constants.W_OK);
@@ -326,14 +326,69 @@ class ConfigManager {
     async ensureDownloadLocation() {
         try {
             const location = this.getDownloadLocation();
-            if (!existsSync(location)) {
-                await mkdirSync(location, { recursive: true, mode: 0o700 });
-                logger.info('Created download directory', { location });
+            
+            // Check if path is on an external/network drive
+            if (location.startsWith('/Volumes/')) {
+                // Check if drive is mounted
+                const driveName = location.split('/')[2];
+                const driveRoot = `/Volumes/${driveName}`;
+                
+                if (!existsSync(driveRoot)) {
+                    logger.error(`External drive "${driveName}" is not mounted`);
+                    // Fall back to default download location
+                    const fallbackLocation = DEFAULT_DOWNLOAD_DIR;
+                    await this.setDownloadLocation(fallbackLocation);
+                    logger.info(`Falling back to default location: ${fallbackLocation}`);
+                    return fallbackLocation;
+                }
+
+                // Check write permissions
+                try {
+                    await accessSync(driveRoot, constants.W_OK);
+                } catch (error) {
+                    logger.error(`No write permission for external drive "${driveName}"`);
+                    // Fall back to default download location
+                    const fallbackLocation = DEFAULT_DOWNLOAD_DIR;
+                    await this.setDownloadLocation(fallbackLocation);
+                    logger.info(`Falling back to default location: ${fallbackLocation}`);
+                    return fallbackLocation;
+                }
             }
+
+            // Create directory with proper error handling
+            try {
+                // First check if exists
+                if (!existsSync(location)) {
+                    await mkdirSync(location, { recursive: true, mode: 0o755 });
+                    logger.info('Created download directory', { location });
+                }
+                
+                // Verify we can write to it
+                await accessSync(location, constants.W_OK);
+                
+            } catch (error) {
+                logger.error(`Failed to create or access download location: ${location}`, error);
+                // Fall back to default download location
+                const fallbackLocation = DEFAULT_DOWNLOAD_DIR;
+                await this.setDownloadLocation(fallbackLocation);
+                logger.info(`Falling back to default location: ${fallbackLocation}`);
+                return fallbackLocation;
+            }
+            
             return location;
         } catch (error) {
             logger.error('Failed to ensure download location', error);
-            throw error;
+            // Fall back to default download location
+            const fallbackLocation = DEFAULT_DOWNLOAD_DIR;
+            try {
+                await mkdirSync(fallbackLocation, { recursive: true, mode: 0o755 });
+                await this.setDownloadLocation(fallbackLocation);
+                logger.info(`Falling back to default location: ${fallbackLocation}`);
+                return fallbackLocation;
+            } catch (innerError) {
+                logger.error('Failed to create fallback location', innerError);
+                throw error; // Throw original error if fallback also fails
+            }
         }
     }
 

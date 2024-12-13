@@ -1,0 +1,34 @@
+
+> a2b-downloader@1.0.0 start
+> electron .
+
+03:17:20.340 › Starting app initialization...
+03:17:20.344 › Initializing DownloadManager...
+03:17:20.537 › [ConfigManager] Config manager initialized successfully {}
+03:17:22.104 › DownloadManager initialized successfully
+03:17:22.105 › Download manager initialized
+03:17:22.107 › Download location ensured
+03:17:22.246 › Starting IPC setup...
+03:17:22.247 › Registered handler: download:video
+03:17:22.247 › Registered handler: dialog:openFile
+03:17:22.248 › Registered handler: file:read
+03:17:22.248 › Registered handler: cookies:fetch
+03:17:22.249 › Registered handler: select-download-location
+03:17:22.249 › Registered handler: get-download-location
+03:17:22.249 › Registered IPC handlers: [
+  'download:video',
+  'dialog:openFile',
+  'file:read',
+  'cookies:fetch',
+  'select-download-location',
+  'get-download-location'
+]
+03:17:22.266 › Window created and IPC setup complete
+03:25:03.611 › Starting application cleanup...
+03:25:03.837 › Cleanup complete, quitting application
+03:25:03.838 › Removed handler: download:video
+03:25:03.838 › Removed handler: dialog:openFile
+03:25:03.838 › Removed handler: file:read
+03:25:03.838 › Removed handler: cookies:fetch
+03:25:03.838 › Removed handler: select-download-location
+03:25:03.838 › Removed handler: get-download-location
