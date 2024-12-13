@@ -11,6 +11,7 @@ electronLog.transports.file.level = 'info';
 electronLog.transports.console.level = 'debug';
 
 let mainWindow;
+let appInitialized = false; // Flag to prevent duplicate initialization
 const registeredHandlers = new Set();
 let isQuitting = false;
 
@@ -57,6 +58,11 @@ const validateCookies = (cookies) => {
 
 // Set up IPC handlers
 const setupIPC = () => {
+    if (registeredHandlers.size > 0) {
+        electronLog.warn('IPC handlers already set up. Skipping duplicate registration.');
+        return;
+    }
+
     electronLog.info('Setting up IPC handlers...');
     cleanupIPCHandlers();
 
@@ -66,7 +72,7 @@ const setupIPC = () => {
         electronLog.debug(`Registered handler: ${channel}`);
     };
 
-    // Cookie fetching handler
+    // Register handlers
     registerHandler('cookies:fetch', async (event, url) => {
         try {
             validateUrl(url);
@@ -80,7 +86,6 @@ const setupIPC = () => {
         }
     });
 
-    // Download video handler
     registerHandler('download:video', async (event, data) => {
         const { url, cookies } = data;
         electronLog.info('Download request received for URL:', url);
@@ -115,30 +120,6 @@ const setupIPC = () => {
             return { success: true, message: 'Download completed successfully.' };
         } catch (error) {
             electronLog.error('Error during download:', error);
-            return { success: false, error: error.message };
-        }
-    });
-
-    // Other handlers (dialog, file operations)
-    registerHandler('dialog:openFile', async () => {
-        try {
-            const result = await dialog.showOpenDialog(mainWindow, {
-                properties: ['openFile'],
-                filters: [{ name: 'Cookie Files', extensions: ['txt', 'json'] }]
-            });
-            return result.canceled ? null : result.filePaths[0];
-        } catch (error) {
-            electronLog.error('Error in open file dialog:', error);
-            return { success: false, error: error.message };
-        }
-    });
-
-    registerHandler('get-download-location', async () => {
-        try {
-            const location = configManager.getDownloadLocation();
-            return { success: true, location };
-        } catch (error) {
-            electronLog.error('Error getting download location:', error);
             return { success: false, error: error.message };
         }
     });
@@ -184,6 +165,13 @@ const createWindow = () => {
 };
 
 const initializeApp = async () => {
+    if (appInitialized) {
+        electronLog.warn('App is already initialized. Skipping duplicate initialization.');
+        return;
+    }
+
+    appInitialized = true;
+
     try {
         electronLog.info('Initializing app...');
         await cookieManager.initializeCluster();
@@ -197,7 +185,6 @@ const initializeApp = async () => {
     }
 };
 
-// Application lifecycle handlers
 app.whenReady().then(initializeApp).catch((error) => {
     electronLog.error('Failed to initialize app:', error);
     app.quit();
