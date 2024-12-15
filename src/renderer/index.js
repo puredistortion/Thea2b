@@ -1,102 +1,145 @@
+// Theme management system
+function initializeTheme() {
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    document.body.setAttribute('data-theme', currentTheme);
+    updateThemeColors(currentTheme);
+}
+
+function toggleTheme() {
+    const currentTheme = document.body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    document.body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateThemeColors(newTheme);
+}
+
+function updateThemeColors(theme) {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+        root.style.setProperty('--bg-color', '#1a1a1a');
+        root.style.setProperty('--text-color', '#ffffff');
+        root.style.setProperty('--input-bg', '#2d2d2d');
+        root.style.setProperty('--border-color', '#404040');
+        root.style.setProperty('--button-bg', '#4a4a4a');
+        root.style.setProperty('--button-hover', '#5a5a5a');
+    } else {
+        root.style.setProperty('--bg-color', '#ffffff');
+        root.style.setProperty('--text-color', '#333333');
+        root.style.setProperty('--input-bg', '#ffffff');
+        root.style.setProperty('--border-color', '#cccccc');
+        root.style.setProperty('--button-bg', '#76c7c0');
+        root.style.setProperty('--button-hover', '#5fb5ae');
+    }
+}
+
+// Toast notification system
+function showToast(message, duration = 3000) {
+    const toast = document.createElement('div');
+    toast.className = 'toast-notification';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add('fade-out');
+        setTimeout(() => toast.remove(), 300);
+    }, duration);
+}
+
+// URL validation function
+function isValidURL(url) {
+    try {
+        new URL(url);
+        return true;
+    } catch (error) {
+        console.error("Invalid URL format:", error);
+        return false;
+    }
+}
+
+// Function to fetch cookies automatically
+async function fetchCookiesForURL(url) {
+    if (!isValidURL(url)) {
+        showToast("❌ Invalid URL provided");
+        return null;
+    }
+
+    try {
+        console.log(`Attempting to fetch cookies for URL: ${url}`);
+        const cookies = await window.api.invoke('cookies:fetch', url);
+
+        if (cookies && cookies.length) {
+            document.getElementById('cookies').value = JSON.stringify(cookies, null, 2);
+            console.log("Cookies fetched successfully:", cookies);
+            showToast("🍪 Cookies fetched successfully");
+            return cookies;
+        } else {
+            console.warn("No cookies were returned for the URL.");
+            showToast("⚠️ No cookies found");
+            return null;
+        }
+    } catch (error) {
+        console.error("Failed to fetch cookies automatically:", error);
+        showToast("❌ Error fetching cookies");
+        return null;
+    }
+}
+
+// Function to handle video download
+async function downloadVideo() {
+    const url = document.getElementById('url').value.trim();
+    let cookies = document.getElementById('cookies').value.trim();
+
+    if (!isValidURL(url)) {
+        showToast('❌ Invalid URL format');
+        return;
+    }
+
+    if (!cookies) {
+        showToast('⏳ Fetching cookies...');
+        cookies = await fetchCookiesForURL(url);
+    }
+
+    try {
+        showToast('⬇️ Starting download...');
+        const response = await window.api.invoke('download:video', { url, cookies });
+
+        if (response.success) {
+            console.log("Download response:", response);
+            showToast('✅ Download completed successfully!');
+        } else {
+            console.error("Download failed:", response.error);
+            showToast("❌ Download failed");
+        }
+    } catch (error) {
+        console.error("Download error:", error);
+        showToast("❌ An error occurred during the download");
+    }
+}
+
+// Clear cookies field
+function clearCookies() {
+    const cookiesInput = document.getElementById('cookies');
+    if (cookiesInput) {
+        cookiesInput.value = "";
+        showToast("🧹 Cookies cleared");
+    } else {
+        console.error("Cookies input element not found.");
+    }
+}
+
+// Add event listeners
 document.addEventListener('DOMContentLoaded', () => {
-    // Get button elements
-    const downloadButton = document.getElementById('downloadButton');
-    const browseButton = document.getElementById('browseButton');
-    const fetchCookiesButton = document.getElementById('fetchCookiesButton');
-    const clearButton = document.getElementById('clearButton');
-    const selectLocationBtn = document.getElementById('select-location-btn');
+    // Initialize theme
+    initializeTheme();
 
-    // Download Button
-    downloadButton?.addEventListener('click', async () => {
+    // Attach event listeners
+    document.getElementById('downloadButton').addEventListener('click', downloadVideo);
+    document.getElementById('clearButton').addEventListener('click', clearCookies);
+    document.getElementById('fetchCookiesButton').addEventListener('click', async () => {
         const url = document.getElementById('url').value.trim();
-        const cookies = document.getElementById('cookies').value.trim();
-        
-        if (!url) {
-            alert('Please enter a valid URL!');
-            return;
-        }
-
-        try {
-            const result = await window.api.invoke('download:video', { url, cookies });
-            if (result.success) {
-                alert(result.message || 'Download started successfully!');
-            } else {
-                console.error('Download error:', result.error);
-                alert(result.error || 'Failed to start the download.');
-            }
-        } catch (error) {
-            console.error('Download error:', error);
-            alert('An unexpected error occurred while starting the download.');
-        }
+        await fetchCookiesForURL(url);
     });
-
-    // Browse Button
-    browseButton?.addEventListener('click', async () => {
-        try {
-            const filePath = await window.api.invoke('dialog:openFile');
-            if (filePath) {
-                const content = await window.api.invoke('file:read', filePath);
-                document.getElementById('cookies').value = content;
-            }
-        } catch (error) {
-            console.error('Browse error:', error);
-            alert('Failed to load the selected file.');
-        }
-    });
-
-    // Fetch Cookies Button
-    fetchCookiesButton?.addEventListener('click', async () => {
-        const url = document.getElementById('url').value.trim();
-
-        if (!url) {
-            alert('Please enter a valid URL to fetch cookies.');
-            return;
-        }
-
-        try {
-            const result = await window.api.invoke('cookies:fetch', url);
-            if (result.success && result.cookies) {
-                document.getElementById('cookies').value = JSON.stringify(result.cookies, null, 2);
-                alert('Cookies fetched successfully!');
-            } else {
-                console.error('Cookie fetch error:', result.error);
-                alert(result.error || 'Failed to fetch cookies.');
-            }
-        } catch (error) {
-            console.error('Cookie fetch error:', error);
-            alert('An unexpected error occurred while fetching cookies.');
-        }
-    });
-
-    // Clear Button
-    clearButton?.addEventListener('click', () => {
-        document.getElementById('cookies').value = '';
-        alert('Cookies cleared successfully!');
-    });
-
-    // Select Location Button
-    selectLocationBtn?.addEventListener('click', async () => {
-        try {
-            const result = await window.api.invoke('select-download-location');
-            if (result.success && result.location) {
-                document.getElementById('current-location').textContent = result.location;
-                alert('Download location updated successfully!');
-            } else {
-                console.error('Location selection error:', result.error);
-                alert(result.error || 'Failed to update download location.');
-            }
-        } catch (error) {
-            console.error('Location selection error:', error);
-            alert('An unexpected error occurred while selecting the download location.');
-        }
-    });
-
-    // Load initial download location
-    window.api.invoke('get-download-location')
-        .then(result => {
-            if (result.success && result.location) {
-                document.getElementById('current-location').textContent = result.location;
-            }
-        })
-        .catch(error => console.error('Error loading download location:', error));
+    document.getElementById('themeToggle').addEventListener('click', toggleTheme);
 });
+
+console.log("Renderer.js script loaded successfully.");
